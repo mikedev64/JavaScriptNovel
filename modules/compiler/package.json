@@ -1,0 +1,15 @@
+{
+  "name": "@jsnovel/compiler",
+  "version": "1.0.0",
+  "main": "compile.js",
+  "type": "module",
+  "scripts": {
+    "dev": "node .",
+    "start": "node main.js",
+    "build": "go build ."
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
