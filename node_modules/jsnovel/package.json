@@ -1,15 +1,16 @@
 {
   "name": "jsnovel",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "ts-node ."
   },
   "keywords": [],
-  "author": "",
+  "author": "PintoDev64",
   "license": "ISC",
-  "description": "",
+  "description": "Visual Novel Game Engine Core",
   "devDependencies": {
+    "ts-node": "^10.9.2",
     "typescript": "^5.8.3"
   }
 }

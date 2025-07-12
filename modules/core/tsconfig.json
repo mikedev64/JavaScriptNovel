@@ -1,0 +1,28 @@
+{
+  "compilerOptions": {
+    /* ### BASICS ### */
+    "target": "ES2020",              // Buen nivel para navegadores modernos
+    "module": "ESNext",              // Para usar ES modules nativos en import/export
+    "moduleResolution": "Node",      // Resolución de módulos tipo Node (común para bundlers)
+    "lib": ["DOM", "ES2020"],        // APIs del navegador + ES2020
+
+    /* ### OUTPUT ### */
+    "outDir": "./dist",              // Carpeta de salida para JS compilado
+    "rootDir": "./",              // Carpeta raíz de tu código fuente
+
+    /* ### QUALITY ### */
+    "strict": true,                  // Activa todas las comprobaciones estrictas
+    "noImplicitAny": true,           // Prohíbe tipos `any` implícitos
+    "strictNullChecks": true,        // Null y undefined estrictos
+    "forceConsistentCasingInFileNames": true,
+
+    /* ### CLEAN BUILD ### */
+    "esModuleInterop": true,         // Mejor compatibilidad con CommonJS si llegas a usar algo externo
+    "allowSyntheticDefaultImports": true,
+
+    /* ### SOURCE MAPS ### */
+    "sourceMap": true                // Debugging en navegador
+  },
+  "include": ["src", "index.ts"],                // Lo que quieres compilar
+  "exclude": ["node_modules", "dist"] // Carpetas ignoradas
+}
