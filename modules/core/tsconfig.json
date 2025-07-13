@@ -23,6 +23,6 @@
     /* ### SOURCE MAPS ### */
     "sourceMap": true                // Debugging en navegador
   },
-  "include": ["src", "index.ts"],                // Lo que quieres compilar
+  "include": ["src", "constants", "utils", "types", "types"],                // Lo que quieres compilar
   "exclude": ["node_modules", "dist"] // Carpetas ignoradas
 }
