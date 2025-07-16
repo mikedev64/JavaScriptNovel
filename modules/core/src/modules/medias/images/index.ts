@@ -51,14 +51,54 @@ export default class ImageManager extends ErrorHandler implements IImageManager 
                         return this.logErrorInfo("setImageElement", `No se pudo obtener la imagen desde la ruta '${path}'`)
                 }
 
-                this.Collection.set(name, imageBlob)
+                const ImageObject: TMapValue = {
+                        BlobBruto: imageBlob,
+                        BlobUrl: null,
+                        createdAt: Date.now(),
+                        size: imageBlob.size
+                }
 
-                return { [name]: imageBlob }
+                this.Collection.set(name, ImageObject)
+
+                return { [name]: ImageObject }
+        }
+
+        prepareMemoryMedia(name: string): parseStruct {
+                const imageElement = this.getImageElement(name)
+
+                if (!imageElement) {
+                        return this.logErrorInfo("prepareMedia", `La imagen con el nombre '${name}' no existe en la colección`)
+                }
+
+                return imageElement
+        }
+
+        removeMemoryMedia(name: string): parseStruct {
+                if (typeof name !== "string") {
+                        return this.logErrorInfo("removeMedia", "El nombre de la imagen debe ser un string")
+                }
+
+                const imageElement = this.getImageElement(name)
+
+                if (!imageElement) {
+                        return this.logErrorInfo("removeMedia", `La imagen con el nombre '${name}' no existe en la colección`)
+                }
+
+                imageElement[name].BlobUrl = null
+
+                this.Collection.set(name, imageElement[name])
+
+                return { [name]: imageElement[name] }
         }
 }
 
 type TMapKey = string
-type TMapValue = Blob
+type TMapValue = {
+        BlobBruto: Blob
+        BlobUrl: string | null
+        createdAt: number
+        size: number
+}
 type parseStruct = { [K in TMapKey]: TMapValue } | null
 
 interface IImageManager {
@@ -76,4 +116,16 @@ interface IImageManager {
          * @returns {parseStruct} parseStruct
          */
         setImageElement(type: CoreGenerics.TFileTypeImage, path: CoreGenerics.TFilePath, name: string): Promise<parseStruct>
+        /**
+         * Prepara el medio en memoria para su uso
+         * @param name nombre de la imagen a preparar
+         * @returns {parseStruct} parseStruct
+         */
+        prepareMemoryMedia(name: string): parseStruct
+        /**
+         * Remueve el medio en memoria
+         * @param name nombre de la imagen a remover
+         * @returns {parseStruct} parseStruct
+         */
+        removeMemoryMedia(name: string): parseStruct
 }

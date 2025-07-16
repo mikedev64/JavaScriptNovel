@@ -18,15 +18,17 @@ func main() {
 
 	scanner := bufio.NewScanner(file)
 
-	var linea string = ""
-
-	for scanner.Scan() {
-		linea = linea + scanner.Text()
+	if !scanner.Scan() {
+		fmt.Println("Error reading file")
+		return
 	}
 
-	if err := scanner.Err(); err != nil {
-		fmt.Println("Error al leer el archivo:", err)
+	fmt.Print(scanner.Text())
+	
+	if !scanner.Scan() {
+		fmt.Println("Error reading file")
+		return
 	}
 
-	fmt.Print(linea)
+	fmt.Print(scanner.Text())
 }

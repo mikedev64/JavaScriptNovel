@@ -11,11 +11,21 @@ export default class VideoManager extends ErrorHandler implements IVideoManager 
                 this.Collection = new Map()
         }
 
-        static instance() {
+        /**
+         * Crea o devuelve la instancia unica de la clase
+         * @returns {IVideoManager} IVideoManager
+         */
+        static instance(): IVideoManager {
                 if (!VideoManager.INSTANCE) VideoManager.INSTANCE = new VideoManager();
                 return VideoManager.INSTANCE
         }
 
+        /**
+         * Obtiene un blob de video desde la ruta especificada
+         * @param type tipo de archivo de video
+         * @param path ruta del archivo de video
+         * @returns {Promise<Blob | null>} Blob del video o null si hay un error
+         */
         private async blobVideo(type: CoreGenerics.TFileTypeVideo, path: CoreGenerics.TFilePath): Promise<Blob | null> {
                 const response = await fecthFiles(type, path)
 
@@ -51,14 +61,54 @@ export default class VideoManager extends ErrorHandler implements IVideoManager 
                         return this.logErrorInfo("setVideoElement", `No se pudo obtener el video desde la ruta '${path}'`)
                 }
 
-                this.Collection.set(name, videoBlob)
+                const VideoObject: TMapValue = {
+                        BlobBruto: videoBlob,
+                        BlobUrl: null,
+                        createdAt: Date.now(),
+                        size: videoBlob.size
+                }
 
-                return { [name]: videoBlob }
+                this.Collection.set(name, VideoObject)
+
+                return { [name]: VideoObject }
+        }
+
+        prepareMemoryMedia(name: string): parseStruct {
+                const videoElement = this.getVideoElement(name)
+
+                if (!videoElement) {
+                        return this.logErrorInfo("prepareMedia", `El video con el nombre '${name}' no existe en la colección`)
+                }
+
+                return videoElement
+        }
+
+        removeMemoryMedia(name: string): parseStruct {
+                if (typeof name !== "string") {
+                        return this.logErrorInfo("removeMedia", "El nombre del video debe ser un string")
+                }
+
+                const videoElement = this.getVideoElement(name)
+
+                if (!videoElement) {
+                        return this.logErrorInfo("removeMedia", `El video con el nombre '${name}' no existe en la colección`)
+                }
+
+                videoElement[name].BlobUrl = null
+
+                this.Collection.set(name, videoElement[name])
+
+                return { [name]: videoElement[name] }
         }
 }
 
 type TMapKey = string
-type TMapValue = Blob
+type TMapValue = {
+        BlobBruto: Blob
+        BlobUrl: string | null
+        createdAt: number
+        size: number
+}
 type parseStruct = { [K in TMapKey]: TMapValue } | null
 
 interface IVideoManager {
@@ -76,4 +126,16 @@ interface IVideoManager {
          * @returns {parseStruct} parseStruct
          */
         setVideoElement(type: CoreGenerics.TFileTypeVideo, path: CoreGenerics.TFilePath, name: string): Promise<parseStruct>
+        /**
+         * Prepara el medio en memoria para su uso
+         * @param name nombre del video a preparar
+         * @returns {parseStruct} parseStruct
+         */
+        prepareMemoryMedia(name: string): parseStruct
+        /**
+         * Remueve el medio en memoria
+         * @param name nombre del video a remover
+         * @returns {boolean} parseStruct
+         */
+        removeMemoryMedia(name: string): parseStruct
 }

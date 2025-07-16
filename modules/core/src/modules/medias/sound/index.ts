@@ -51,14 +51,54 @@ export default class AudioManager extends ErrorHandler implements IAudioManager 
                         return this.logErrorInfo("setAudioElement", `No se pudo obtener el audio desde la ruta '${path}'`)
                 }
 
-                this.Collection.set(name, audioBlob)
+                const AudioObject: TMapValue = {
+                        BlobBruto: audioBlob,
+                        BlobUrl: null,
+                        createdAt: Date.now(),
+                        size: audioBlob.size
+                }
 
-                return { [name]: audioBlob }
+                this.Collection.set(name, AudioObject)
+
+                return { [name]: AudioObject }
+        }
+
+        prepareMemoryMedia(name: string): parseStruct {
+                const audioElement = this.getAudioElement(name)
+
+                if (!audioElement) {
+                        return this.logErrorInfo("prepareMedia", `El audio con el nombre '${name}' no existe en la colección`)
+                }
+
+                return audioElement
+        }
+
+        removeMemoryMedia(name: string): parseStruct {
+                if (typeof name !== "string") {
+                        return this.logErrorInfo("removeMedia", "El nombre del audio debe ser un string")
+                }
+
+                const audioElement = this.getAudioElement(name)
+
+                if (!audioElement) {
+                        return this.logErrorInfo("removeMedia", `El audio con el nombre '${name}' no existe en la colección`)
+                }
+
+                audioElement[name].BlobUrl = null
+
+                this.Collection.set(name, audioElement[name])
+
+                return { [name]: audioElement[name] }
         }
 }
 
 type TMapKey = string
-type TMapValue = Blob
+type TMapValue = {
+        BlobBruto: Blob
+        BlobUrl: string | null
+        createdAt: number
+        size: number
+}
 type parseStruct = { [K in TMapKey]: TMapValue } | null
 
 interface IAudioManager {
@@ -76,4 +116,16 @@ interface IAudioManager {
          * @returns {parseStruct} parseStruct
          */
         setAudioElement(type: CoreGenerics.TFileTypeAudio, path: CoreGenerics.TFilePath, name: string): Promise<parseStruct>
+        /**
+         * Prepara el medio en memoria para su uso
+         * @param name nombre del audio a preparar
+         * @returns {parseStruct} parseStruct
+         */
+        prepareMemoryMedia(name: string): parseStruct
+        /**
+         * Remueve el medio en memoria
+         * @param name nombre del audio a remover
+         * @returns {parseStruct} parseStruct
+         */
+        removeMemoryMedia(name: string): parseStruct
 }

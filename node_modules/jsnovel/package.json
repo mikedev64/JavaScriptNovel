@@ -3,7 +3,8 @@
   "version": "0.0.1",
   "type": "module",
   "scripts": {
-    "build": "ts-node ."
+    "start": "ts-node .",
+    "build": "tsc"
   },
   "keywords": [],
   "author": "PintoDev64",
