@@ -1,141 +1,210 @@
-import { InterpreterTypes } from "./interpreter.js";
+import { InterpreterTypes } from './interpreter.js'
 
 export namespace InterpreterActions {
         export type TLenguageActions =
-                | "volume"
-                | "play"
-                | "pause"
-                | "callExpression"
-                | "jump"
-                | "update"
-                | "variable"
-                | "audio"
-                | "video"
-                | "image"
-                | "dialogue"
-                | "scene"
-                | "background"
-                | "draw"
-                | "undraw" // WTF is this?
+                | 'volume'
+                | 'play'
+                | 'pause'
+                | 'callExpression'
+                | 'jump'
+                | 'update'
+                | 'variable'
+                | 'audio'
+                | 'video'
+                | 'image'
+                | 'dialogue'
+                | 'scene'
+                | 'background'
+                | 'draw'
+                | 'undraw' // WTF is this?
 
         export type TLenguageModificatorOptions =
-                | "start"
-                | "loop"
+                | 'start'
+                | 'loop'
                 /* | "reverse" */ // Pending
-                | "fade"
-                | "draw"
+                | 'fade'
+                | 'draw'
 
-        export type TLenguageModificators<T extends TLenguageModificatorOptions> = T
+        export type TLenguageModificators<
+                T extends TLenguageModificatorOptions
+        > = T
 
         export type TLenguageStruct<T extends TLenguageActions> =
-                T extends "play" ? IMapActionPlay :
-                T extends "pause" ? IMapActionPause :
-                T extends "callExpression" ? IMapActionCallExpression :
-                T extends "jump" ? IMapActionJump :
-                T extends "variable" ? IMapActionVariable :
-                T extends "update" ? IMapActionUpdate :
-                T extends "audio" ? IMapActionAudio :
-                T extends "video" ? IMapActionVideo :
-                T extends "image" ? IMapActionImage :
-                T extends "dialogue" ? IMapActionDialogue :
-                T extends "scene" ? IMapActionScene :
-                T extends "background" ? IMapActionBackground :
-                T extends "draw" ? IMapActionDraw :
-                T extends "undraw" ? IMapActionUndraw :
-                never;
+                T extends 'play'
+                ? IMapActionPlay
+                : T extends 'pause'
+                ? IMapActionPause
+                : T extends 'callExpression'
+                ? IMapActionCallExpression
+                : T extends 'jump'
+                ? IMapActionJump
+                : T extends 'variable'
+                ? IMapActionVariable
+                : T extends 'update'
+                ? IMapActionUpdate
+                : T extends 'audio'
+                ? IMapActionAudio
+                : T extends 'video'
+                ? IMapActionVideo
+                : T extends 'image'
+                ? IMapActionImage
+                : T extends 'dialogue'
+                ? IMapActionDialogue
+                : T extends 'scene'
+                ? IMapActionScene
+                : T extends 'background'
+                ? IMapActionBackground
+                : T extends 'draw'
+                ? IMapActionDraw
+                : T extends 'undraw'
+                ? IMapActionUndraw
+                : never
 
+        /**
+         * Representacion base de una instruccion
+         */
         export interface IInstructionStruct {
                 type: TLenguageActions
-                arguments: any[any] | null
+                name: string | null
+                arguments: any[] | null
                 modificators: TLenguageModificators<TLenguageModificatorOptions> | null
                 value: string | number | boolean | { [K: string]: any } | null
-                directives: IInstructionStruct | InterpreterTypes.TLenguageTypes<InterpreterTypes.TLenguageSpecialTypes | InterpreterTypes.TLenguageVariableTypes> | null
                 body: IInstructionStruct[] | null
+                directives:
+                | IInstructionStruct
+                | InterpreterTypes.TLenguageTypes<InterpreterTypes.TLenguageSpecialTypes | InterpreterTypes.TLenguageVariableTypes>
+                | null
         }
 
+        /**
+         * Representacion de una accion de reproduccion de audio de lenguaje
+         */
         export interface IMapActionPlay extends IInstructionStruct {
-                type: "play"
-                name: "play"
-                arguments: [InterpreterTypes.TLenguageTypes<"audio">]
-                modificators: TLenguageModificators<"loop"> | null
-                directives: {
-                        type: "volume"
-                        name: "volume"
-                        arguments: [InterpreterTypes.TLenguageTypes<"number">]
+                type: 'play'
+                name: 'play'
+                arguments: [InterpreterTypes.TLenguageTypes<'audio'>]
+                modificators: TLenguageModificators<'loop'> | null
+                directives:
+                | {
+                        type: 'volume'
+                        name: 'volume'
+                        arguments: [InterpreterTypes.TLenguageTypes<'number'>]
                         modificators: null
                         directives: null
                         value: null
                         body: null
                 } | null
         }
+        /**
+         * Representacion de una accion de pausa de audio de lenguaje
+         */
         export interface IMapActionPause extends IInstructionStruct {
-                type: "pause"
-                name: "pause"
-                arguments: [InterpreterTypes.TLenguageTypes<"audio">]
+                type: 'pause'
+                name: 'pause'
+                arguments: [InterpreterTypes.TLenguageTypes<'audio'>]
         }
+        /**
+         * Representacion de una accion de llamada a una expresion de lenguaje
+         */
         export interface IMapActionCallExpression extends IInstructionStruct {
-                type: "callExpression"
+                type: 'callExpression'
                 name: string
-                arguments: [InterpreterTypes.TLenguageTypes<"string">]
+                arguments: [InterpreterTypes.TLenguageTypes<'string'>]
         }
+        /**
+         * Representacion de una accion de salto a una etiqueta de lenguaje
+         */
         export interface IMapActionJump extends IInstructionStruct {
-                type: "jump"
-                name: "jump"
-                arguments: [InterpreterTypes.TLenguageTypes<"string">]
-                modificators: TLenguageModificators<"fade"> | null
+                type: 'jump'
+                name: 'jump'
+                arguments: [InterpreterTypes.TLenguageTypes<'string'>]
+                modificators: TLenguageModificators<'fade'> | null
         }
+        /**
+         * Representacion de una accion de variable de lenguaje
+         */
         export interface IMapActionVariable extends IInstructionStruct {
-                type: "variable"
+                type: 'variable'
                 name: string
-                value: InterpreterTypes.TLenguageTypes<"string" | "number" | "boolean">
+                value: InterpreterTypes.TLenguageTypes<
+                        'string' | 'number' | 'boolean'
+                >
         }
+        /**
+         * Representacion de una accion de actualizacion de variable de lenguaje
+         */
         export interface IMapActionUpdate extends IInstructionStruct {
-                type: "update"
+                type: 'update'
                 name: string
-                value: InterpreterTypes.TLenguageTypes<"string" | "number" | "boolean">
+                value: InterpreterTypes.TLenguageTypes<
+                        'string' | 'number' | 'boolean'
+                >
         }
+        /**
+         * Representacion de una accion de audio de lenguaje
+         */
         export interface IMapActionAudio extends IInstructionStruct {
-                type: "audio"
+                type: 'audio'
                 name: string
-                value: InterpreterTypes.TLenguageTypes<"audio">
+                value: InterpreterTypes.TLenguageTypes<'audio'>
         }
+        /**
+         * Representacion de una accion de video de lenguaje
+         */
         export interface IMapActionVideo extends IInstructionStruct {
-                type: "video"
+                type: 'video'
                 name: string
-                value: InterpreterTypes.TLenguageTypes<"video">
+                value: InterpreterTypes.TLenguageTypes<'video'>
         }
+        /**
+         * Representacion de una accion de imagen de lenguaje
+         */
         export interface IMapActionImage extends IInstructionStruct {
-                type: "image"
+                type: 'image'
                 name: string
-                value: InterpreterTypes.TLenguageTypes<"image">
+                value: InterpreterTypes.TLenguageTypes<'image'>
         }
+        /**
+         * Representacion de una accion de dialogo de lenguaje
+         */
         export interface IMapActionDialogue extends IInstructionStruct {
-                type: "dialogue"
+                type: 'dialogue'
                 name: string
-                value: InterpreterTypes.TLenguageTypes<"string">
+                value: InterpreterTypes.TLenguageTypes<'string'>
         }
+        /**
+         * Representacion de una accion de escena de lenguaje
+         */
         export interface IMapActionScene extends IInstructionStruct {
-                type: "scene"
+                type: 'scene'
                 name: string
                 body: IInstructionStruct[] | null
-                modificators: InterpreterActions.TLenguageModificators<"start"> | null
+                modificators: InterpreterActions.TLenguageModificators<'start'> | null
         }
+        /**
+         * Representacion de una accion de imagen de fondo en el lenguaje
+         */
         export interface IMapActionBackground extends IInstructionStruct {
-                type: "background"
+                type: 'background'
                 name: null
                 arguments: null
                 value: null
                 body: null
-                directives: InterpreterTypes.TLenguageTypes<"string" | "image"> | null
+                directives: InterpreterTypes.TLenguageTypes<
+                        'string' | 'image'
+                > | null
         }
+        /**
+         * Representacion de una accion de dibujar en el lienzo con el lenguaje
+         */
         export interface IMapActionDraw extends IInstructionStruct {
-                type: "draw"
+                type: 'draw'
                 name: null
                 arguments: null
                 value: null
                 body: null
                 directives: {
-                        type: "callExpression"
+                        type: 'callExpression'
                         name: string
                         arguments: any[any] | null
                         modificators: null
@@ -144,14 +213,17 @@ export namespace InterpreterActions {
                         body: null
                 }
         }
+        /**
+         * Representacion de una accion de eliminar un dibujo del lienzo con el lenguaje
+         */
         export interface IMapActionUndraw extends IInstructionStruct {
-                type: "undraw"
+                type: 'undraw'
                 name: null
                 arguments: null
                 value: null
                 body: null
                 directives: {
-                        type: "callExpression"
+                        type: 'callExpression'
                         name: string
                         arguments: any[any] | null
                         modificators: null
