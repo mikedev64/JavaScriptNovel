@@ -47,7 +47,7 @@ export default class CorePersistent extends ErrorHandler implements ICorePersist
         private parseFromCollection<T extends string>(varName: T): parseStruct {
                 const { varNameCondition } = parseFromCollectionParamCheck(varName, undefined)
                 if (varNameCondition) return this.logErrorInfo("parseFromCollection", "El nombre de la variable debe ser string");
-                
+
                 const varResult = this.Collection.get(varName)
 
                 const { varResultCondition } = parseFromCollectionParamCheck(undefined, varResult)
@@ -63,6 +63,18 @@ export default class CorePersistent extends ErrorHandler implements ICorePersist
                 return this.parseToCollection(name, value)
         }
 
+        setAllVariable(allVariables: { name: TMapKey, value: TMapValue }[]): parseStruct {
+                if (!Array.isArray(allVariables)) return this.logErrorInfo("setVariable", "El argumento debe ser un array de objetos con nombre y valor");
+
+                const result: parseStruct = {}
+                allVariables.forEach(({ name, value }) => {
+                        const parsed = this.parseToCollection(name, value)
+                        if (parsed) Object.assign(result, parsed)
+                })
+
+                return result
+        }
+
         putVariable(name: TMapKey, value: TMapValue): parseStruct {
                 return this.parseToCollection(name, value)
         }
@@ -70,11 +82,19 @@ export default class CorePersistent extends ErrorHandler implements ICorePersist
         getVariable(name: string): parseStruct {
                 return this.parseFromCollection(name)
         }
+
+        getAllVariables(): Exclude<parseStruct, null> {
+                const result: parseStruct = {}
+                this.Collection.forEach((value, key) => {
+                        result[key] = value
+                })
+                return result
+        }
 }
 
 type TMapKey = string
 type TMapValue = string | number | boolean
-type parseStruct = { [K in TMapKey]: TMapValue } | null
+type parseStruct = | { [K in TMapKey]: TMapValue } | null
 
 interface ICorePersistent {
         readonly Collection: Map<TMapKey, TMapValue>
@@ -83,6 +103,11 @@ interface ICorePersistent {
          * @returns {parseStruct} parseStruct
          */
         getVariable(name: TMapKey): parseStruct
+        /**
+         * Retorna todas las variables del contexto actual
+         * @returns {parseStruct} parseStruct
+         */
+        getAllVariables(): parseStruct
         /**
          * Actualiza una variable del contexto actual
          * @returns {parseStruct} parseStruct
@@ -93,4 +118,9 @@ interface ICorePersistent {
          * @returns {parseStruct} parseStruct
          */
         setVariable(name: TMapKey, value: TMapValue): parseStruct
+        /**
+         * Retorna una variable del contexto actual
+         * @returns {parseStruct} parseStruct
+         */
+        setAllVariable(allVariables: { name: TMapKey, value: TMapValue }[]): parseStruct 
 }

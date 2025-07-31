@@ -1,18 +1,21 @@
 import type { ElectronAPITemplate } from "../../../utils";
 
-import { InterpreterActions } from "../../../types/actions";
-import { ElectronAPI, getPlatform } from "../../../utils";
+import { ElectronAPI, getPlatform, ReadLocalStorage, WriteLocalStorage } from "../../../utils";
+import ErrorHandler from "../error";
+import CorePersistent from "../persistent";
+import CoreTimeline from "../timeline";
 
 /**
  * Gestor de guardados
  * @class SavesManager
  * @implements {ISavesManager}
  */
-export default class SavesManager implements ISavesManager {
+export default class SavesManager extends ErrorHandler implements ISavesManager {
         private static INSTANCE: SavesManager | null = null
         private Saves: ISaveSlots[] | null = []
 
         private constructor() {
+                super(SavesManager.name)
                 if (!SavesManager.INSTANCE) SavesManager.INSTANCE = new SavesManager();
                 return SavesManager.INSTANCE;
         }
@@ -27,13 +30,26 @@ export default class SavesManager implements ISavesManager {
                         const electronAPI = ElectronAPI() as ElectronAPITemplate;
                         data = await electronAPI.readStorage("saves") || null;
                 } else {
-                        data = localStorage.getItem("saves");
-                        data = JSON.parse(data as string) as ISaveSlots[] || null;
+                        data = ReadLocalStorage<ISaveSlots[]>("saves");
                 }
 
                 SavesManager.INSTANCE = new SavesManager();
                 SavesManager.INSTANCE.Saves = data
                 return SavesManager.INSTANCE;
+        }
+
+        async storeSaves(): Promise<void> {
+                if (!this.Saves) {
+                        this.logErrorInfo("storeSaves", "No hay guardados para almacenar");
+                        return;
+                }
+
+                if (getPlatform() === "electron") {
+                        const electronAPI = ElectronAPI() as ElectronAPITemplate;
+                        await electronAPI.writeStorage("saves", this.Saves);
+                } else {
+                        WriteLocalStorage<ISaveSlots[]>("saves", this.Saves);
+                }
         }
 
         getSaves(): ISaveSlots[] {
@@ -48,7 +64,7 @@ export default class SavesManager implements ISavesManager {
                 return pageSaves[slot] || null;
         }
 
-        addSave(save: ISaveStruct, page: number, slot: number): void {
+        addSave(save: Pick<ISaveStruct, "thumbnail">, page: number, slot: number): void {
                 if (!this.Saves) this.Saves = [];
                 if (!this.Saves[page]) this.Saves[page] = {};
 
@@ -56,7 +72,15 @@ export default class SavesManager implements ISavesManager {
                         console.warn(`Slot ${slot} on page ${page} already exists. Overwriting.`);
                 }
 
-                this.Saves[page][slot] = save;
+                const persistent = CorePersistent.instance().getAllVariables()!;
+                const history = CoreTimeline.instance().getHistoryGram();
+
+                this.Saves[page][slot] = {
+                        ...save,
+                        timestamp: Date.now(),
+                        persistent: persistent,
+                        history: history
+                };
         }
 
         removeSave(page: number, slot: number): void {
@@ -67,7 +91,7 @@ export default class SavesManager implements ISavesManager {
 }
 
 type TPersistentObject = { [K: string]: string | number | boolean }
-type THistoryActions = InterpreterActions.IMapActionScene
+type THistoryActions = { thread: { scene: number; position: number; }[]; position: number }
 
 interface ISaveStruct {
         thumbnail: string
@@ -104,4 +128,8 @@ interface ISavesManager {
          * @param {number} index Índice del guardado
          */
         removeSave(page: number, slot: number): void
+        /**
+         * Almacena los guardados
+         */
+        storeSaves(): Promise<void>;
 }

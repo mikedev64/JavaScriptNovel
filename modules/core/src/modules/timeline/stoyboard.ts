@@ -1,7 +1,8 @@
 import { InterpreterActions } from "../../../types/actions";
+import { FetchAPI } from "../../../utils";
 import ErrorHandler from "../error";
 
-export default class StoryBoardManager extends ErrorHandler implements IStoryboardManager {
+export class StoryBoardManager extends ErrorHandler implements IStoryboardManager {
         private static STORYBOARD_INSTANCE: StoryBoardManager | null
         private CollectionScenes: Map<TMapKey, TMapValue | InterpreterActions.IMapActionScene> = new Map()
         private sceneValueCounter: number = 1
@@ -10,6 +11,14 @@ export default class StoryBoardManager extends ErrorHandler implements IStoryboa
                 super(name || StoryBoardManager.name)
                 if (!StoryBoardManager.STORYBOARD_INSTANCE) StoryBoardManager.STORYBOARD_INSTANCE = new StoryBoardManager();
                 return StoryBoardManager.STORYBOARD_INSTANCE
+        }
+
+        async initializeStoryBoard(): Promise<void | null> {
+                let data;
+                data = await FetchAPI<InterpreterActions.IMapActionScene[]>("/history/index.json");
+                if (!data) return null;
+
+                this.parseHistory(data);
         }
 
         private transformSceneBodyToBlockBody(sceneBody: InterpreterActions.IMapActionScene["body"]): parseStruct[] {
@@ -57,6 +66,12 @@ export default class StoryBoardManager extends ErrorHandler implements IStoryboa
         getScene(sceneIdentifier: number): InterpreterActions.IMapActionScene {
                 return this.CollectionScenes.get(sceneIdentifier) as InterpreterActions.IMapActionScene
         }
+
+        parseHistory(history: InterpreterActions.IMapActionScene[]): void {
+                history.forEach(scene => {
+                        this.addScene(scene);
+                });
+        }
 }
         
 type TMapKey = number // { position: number, name: string }
@@ -78,4 +93,10 @@ interface IStoryboardManager {
          * @returns {parseStruct} Estructura de la escena
          */
         getScene(sceneIdentifier: number): InterpreterActions.IMapActionScene
+        /**
+         * Transforma el cuerpo de la escena en bloques
+         * @param {InterpreterActions.IMapActionScene["body"]} sceneBody Cuerpo de la escena
+         * @returns {parseStruct[]} Estructura de bloques
+         */
+        parseHistory(history: InterpreterActions.IMapActionScene[]): void
 }

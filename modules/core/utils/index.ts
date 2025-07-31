@@ -34,7 +34,7 @@ export function getPlatform(): CoreGenerics.TPlatform {
                         return 'electron';
                 }
         }
-        
+
         // Fallback: asumir web si no se detecta el UserAgent específico
         return 'web';
 }
@@ -51,13 +51,33 @@ export function WriteLocalStorage<T>(key: string, value: T): boolean {
                         new ErrorHandler("Utils").logErrorInfo("WriteLocalStorage", "localStorage no está disponible en este entorno");
                         return false;
                 }
-                
+
                 const serializedValue = JSON.stringify(value);
                 localStorage.setItem(key, serializedValue);
                 return true;
         } catch (error) {
                 new ErrorHandler("Utils").logErrorInfo("WriteLocalStorage", `Error writing to localStorage for key "${key}": ${error}`);
                 return false;
+        }
+}
+
+/**
+ * Lee datos de localStorage de manera segura
+ * @param key clave a leer
+ * @returns {T | null} valor almacenado o null si no existe
+ */
+export function ReadLocalStorage<T>(key: string): T | null {
+        try {
+                if (typeof localStorage === 'undefined') {
+                        new ErrorHandler("Utils").logErrorInfo("ReadLocalStorage", "localStorage no está disponible en este entorno");
+                        return null;
+                }
+
+                const serializedValue = localStorage.getItem(key) as string;
+                return isValidJSON<T>(serializedValue) || null;
+        } catch (error) {
+                new ErrorHandler("Utils").logErrorInfo("ReadLocalStorage", `Error reading from localStorage for key "${key}": ${error}`);
+                return null;
         }
 }
 
@@ -72,12 +92,25 @@ export function RemoveLocalStorage(key: string): boolean {
                         new ErrorHandler("Utils").logErrorInfo("RemoveLocalStorage", "localStorage no está disponible en este entorno");
                         return false;
                 }
-                
+
                 localStorage.removeItem(key);
                 return true;
         } catch (error) {
                 new ErrorHandler("Utils").logErrorInfo("RemoveLocalStorage", `Error removing from localStorage for key "${key}": ${error}`);
                 return false;
+        }
+}
+
+/**
+ * Lee datos de localStorage de manera segura
+ * @param key clave a leer
+ * @returns {T | null} valor almacenado o null si no existe
+ */
+export function isValidJSON<T>(str: string): T | null {
+        try {
+                return JSON.parse(str) as T;
+        } catch (error) {
+                return null;
         }
 }
 
@@ -90,15 +123,15 @@ export interface ElectronAPITemplate {
         readStorage: (key: string) => Promise<any>;
         writeStorage: (key: string, value: any) => Promise<boolean>;
         removeStorage: (key: string) => Promise<boolean>;
-        
+
         // File system methods
         readFile: (path: string) => Promise<any>;
         writeFile: (path: string, data: any) => Promise<boolean>;
-        
+
         // System methods
         getAppVersion: () => Promise<string>;
         openExternal: (url: string) => Promise<void>;
-        
+
         // Agrega más métodos según necesites
         [key: string]: any;
 }
@@ -109,13 +142,31 @@ export interface ElectronAPITemplate {
  */
 export function ElectronAPI(): ElectronAPITemplate | null {
         try {
-                if (typeof window !== 'undefined' && 
-                    (window as any).JavaScriptNovelInterface) {
+                if (typeof window !== 'undefined' &&
+                        (window as any).JavaScriptNovelInterface) {
                         return (window as any).JavaScriptNovelInterface as ElectronAPITemplate;
                 }
                 return null;
         } catch (error) {
-                new ErrorHandler("Utils").logErrorInfo("ElectronAPI", `Error accessing Electron API: ${error}`);
+                new ErrorHandler("Utils").logErrorInfo(ElectronAPI.name, `Error accessing Electron API: ${error}`);
                 return null;
+        }
+}
+
+/**
+ * Realiza una solicitud HTTP GET a la URL especificada y devuelve el resultado como un objeto JSON
+ * @param url URL a la que se realizará la solicitud
+ * @param options Opciones adicionales para la solicitud (opcional)
+ * @returns {Promise<T | null>} Promesa que resuelve con el objeto JSON o null en caso de error
+ */
+export async function FetchAPI<T>(url: string, options?: RequestInit): Promise<T | null> {
+        try {
+                const response = await fetch(url, options);
+                if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return await (response.json() as Promise<T>);
+        } catch (error) {
+                return new ErrorHandler("Utils").logErrorInfo(FetchAPI.name, `Error fetching API: ${error}`);
         }
 }

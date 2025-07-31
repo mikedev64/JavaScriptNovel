@@ -1,34 +1,23 @@
-import StoryBoardManager from "./stoyboard";
+import { StoryBoardManager } from "./stoyboard";
 
-export class CoreTimeline extends StoryBoardManager implements ICoreTimeline {
+export default class CoreTimeline extends StoryBoardManager implements ICoreTimeline {
         private static TIMELINE_INSTANCE: CoreTimeline | null
-        
+
         private HistoryGram: IHistoryGram[] = []
-        private actualHistoryGram: IHistoryGram = {
-                scene: 0,
-                position: 0
-        }
+        private actualHistoryGram: number = 0
 
         private constructor() { super(CoreTimeline.name) }
 
-        /**
-         * Crea o devuelve la instancia unica de la clase
-         * @returns {ICoreTimeline} ICoreTimeline
-         */
         static instance(): ICoreTimeline {
                 if (!CoreTimeline.TIMELINE_INSTANCE) CoreTimeline.TIMELINE_INSTANCE = new CoreTimeline();
                 return CoreTimeline.TIMELINE_INSTANCE;
         }
 
-        getActualHistoryGram(): IHistoryGram {
-                return this.actualHistoryGram;
-        }
-
-        getHistoryGram(): IHistoryGram[] {
-                return this.HistoryGram;
-        }
-
-        createHistoryGram(scenePosition: number, blockInstructionPosition: number): void {
+        /**
+         * Crea o devuelve la instancia unica de la clase
+         * @returns {ICoreTimeline} ICoreTimeline
+         */
+        private createHistoryGram(scenePosition: number, blockInstructionPosition: number): void {
                 const GettedScene = this.getScene(scenePosition);
                 if (!GettedScene || !GettedScene.body || !Array.isArray(GettedScene.body)) {
                         this.logErrorInfo("Scene body is not an array or is null", `${GettedScene}`);
@@ -47,19 +36,35 @@ export class CoreTimeline extends StoryBoardManager implements ICoreTimeline {
                 });
         }
 
-        restoreHistoryGram(history: IHistoryGram[]): void {
-                this.HistoryGram = history;
+        getHistoryGram(): IHistoryStruct {
+                return { thread: this.HistoryGram, position: this.actualHistoryGram };
+        }
+
+        getHistoryGramEntry(scenePosition: number, blockInstructionPosition: number): IHistoryGram | undefined {
+                return this.HistoryGram.find(entry => entry.scene === scenePosition && entry.position === blockInstructionPosition);
+        }
+
+        restoreHistoryGram(progress: IHistoryStruct): void {
+                this.HistoryGram = progress.thread;
+                this.actualHistoryGram = progress.position;
         }
 
         addHistoryEntry(scenePosition: number, blockInstructionPosition: number): void {
-                if (this.HistoryGram.length >= 50) {
+                if (this.HistoryGram.length >= 10) {
                         this.HistoryGram.shift();
                 }
 
-                this.HistoryGram.push({
-                        scene: scenePosition,
-                        position: blockInstructionPosition
-                });
+                this.createHistoryGram(scenePosition, blockInstructionPosition);
+        }
+
+        moveInsideHistoryGram(direction: "backward" | "forward"): IHistoryGram {
+                if (direction === "backward" && this.actualHistoryGram > 0) {
+                        this.actualHistoryGram--;
+                } else if (direction === "forward" && this.actualHistoryGram < 9) {
+                        this.actualHistoryGram++;
+                }
+
+                return this.HistoryGram[this.actualHistoryGram];
         }
 }
 
@@ -68,32 +73,40 @@ interface IHistoryGram {
         position: number;
 }
 
+interface IHistoryStruct { thread: IHistoryGram[]; position: number }
+
 interface ICoreTimeline {
         /**
-         * Obtiene el actual bloque de acciones
-         * @returns {IHistoryGram} Historial de acciones
+         * Devuelve la instancia unica de la clase
          */
-        getActualHistoryGram(): IHistoryGram
-        /**
-         * Obtiene el historial de acciones
-         * @returns {IHistoryGram[]} Historial de acciones
-         */
-        getHistoryGram(): IHistoryGram[]
-        /**
-         * Crea o devuelve la instancia unica de la clase
-         * @returns {ICoreTimeline} ICoreTimeline
-         */
-        createHistoryGram(scenePosition: number, blockInstructionPosition: number): void
+        getHistoryGram(): IHistoryStruct;
         /**
          * Agrega una entrada completa al historial de acciones
          * @param {number} scenePosition Posicion de la escena
          * @param {number} blockInstructionPosition Posicion de la instruccion del bloque
          */
-        restoreHistoryGram(history: IHistoryGram[]): void
+        restoreHistoryGram(history: IHistoryStruct): void
         /**
          * Agrega una entrada al historial de acciones
          * @param {number} scenePosition Posicion de la escena
          * @param {number} blockInstructionPosition Posicion de la instruccion del bloque
          */
         addHistoryEntry(scenePosition: number, blockInstructionPosition: number): void
+        /**
+         * Obtiene una entrada del historial de acciones
+         * @param {number} scenePosition Posicion de la escena
+         * @param {number} blockInstructionPosition Posicion de la instruccion del bloque
+         * @returns {IHistoryGram | undefined} Entrada del historial de acciones
+         */
+        getHistoryGramEntry(scenePosition: number, blockInstructionPosition: number): IHistoryGram | undefined
+        /**
+         * Mueve el historial de acciones hacia adelante o hacia atras
+         * @param {string} direction Direccion del movimiento
+         * @returns {IHistoryGram} Historial de acciones actualizado
+         */
+        moveInsideHistoryGram(direction: "backward" | "forward"): IHistoryGram
+        /**
+         * Agrega una escena al storyboard
+         * @param {InterpreterActions.IMapActionScene} sceneData Datos de la escena
+         */
 }
