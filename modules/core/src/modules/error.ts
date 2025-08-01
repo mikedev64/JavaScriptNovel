@@ -18,4 +18,11 @@ export default class ErrorHandler {
 
                 return null
         }
+
+        public logWarningInfo(caller: string, details: string): void {
+                const timestamp = new Date().toISOString()
+                const warningMessage = `[${timestamp}] Advertencia en ${this.containerClass}.${caller}`
+
+                console.warn(warningMessage, "\n", `Detalles: ${details}`)
+        }
 }

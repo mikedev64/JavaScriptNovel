@@ -70,13 +70,18 @@ export default class ImageManager extends ErrorHandler implements IImageManager 
                         return this.logErrorInfo("prepareMedia", `La imagen con el nombre '${name}' no existe en la colección`)
                 }
 
+                if (imageElement[name].BlobUrl) {
+                        this.logWarningInfo("prepareMedia", `La imagen '${name}' ya está preparada en memoria`)
+                        return imageElement
+                }
+
+                imageElement[name].BlobUrl = URL.createObjectURL(imageElement[name].BlobBruto)
+                this.Collection.set(name, imageElement[name])
+
                 return imageElement
         }
 
         removeMemoryMedia(name: string): parseStruct {
-                if (typeof name !== "string") {
-                        return this.logErrorInfo("removeMedia", "El nombre de la imagen debe ser un string")
-                }
 
                 const imageElement = this.getImageElement(name)
 
@@ -85,10 +90,9 @@ export default class ImageManager extends ErrorHandler implements IImageManager 
                 }
 
                 imageElement[name].BlobUrl = null
-
                 this.Collection.set(name, imageElement[name])
 
-                return { [name]: imageElement[name] }
+                return imageElement
         }
 }
 

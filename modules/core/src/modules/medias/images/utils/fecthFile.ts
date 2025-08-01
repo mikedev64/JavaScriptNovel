@@ -16,16 +16,16 @@ export async function fecthFiles(type: CoreGenerics.TFileTypeImage, path: CoreGe
         const validFormats: CoreGenerics.TFileTypeImage[] = ["png", "jpg", "gif"];
 
         if (!validFormats.includes(type)) {
-                return new ErrorHandler(fecthFiles.name).logErrorInfo(
-                        "fecthFiles",
+                return new ErrorHandler("image_utils").logErrorInfo(
+                        fecthFiles.name,
                         `El tipo de archivo '${type}' no es válido. Formatos válidos: ${validFormats.join(", ")}`
                 )
         }
 
         // Validar que la extensión del archivo coincida con el tipo esperado
         if (!validateFileExtension(path, type)) {
-                return new ErrorHandler(fecthFiles.name).logErrorInfo(
-                        "fecthFiles",
+                return new ErrorHandler("image_utils").logErrorInfo(
+                        fecthFiles.name,
                         `La extensión del archivo '${path}' no coincide con el tipo esperado '${type}'`
                 )
         }
@@ -39,16 +39,16 @@ export async function fecthFiles(type: CoreGenerics.TFileTypeImage, path: CoreGe
                 const response = await fetch(fullPath);
                 
                 if (!response.ok) {
-                        return new ErrorHandler(fecthFiles.name).logErrorInfo(
-                                "fecthFiles",
+                        return new ErrorHandler("image_utils").logErrorInfo(
+                                fecthFiles.name,
                                 `Error al cargar el archivo: ${response.status} ${response.statusText}`
                         )
                 }
                 
                 return await response.arrayBuffer();
         } catch (error) {
-                return new ErrorHandler(fecthFiles.name).logErrorInfo(
-                        "fecthFiles",
+                return new ErrorHandler("image_utils").logErrorInfo(
+                        fecthFiles.name,
                         `Error de red al cargar el archivo: ${error instanceof Error ? error.message : 'Error desconocido'}`
                 )
         }
