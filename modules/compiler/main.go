@@ -24,11 +24,4 @@ func main() {
 	}
 
 	fmt.Print(scanner.Text())
-	
-	if !scanner.Scan() {
-		fmt.Println("Error reading file")
-		return
-	}
-
-	fmt.Print(scanner.Text())
 }

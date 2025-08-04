@@ -340,7 +340,7 @@
 package main
 
 import (
-	"fmt"
+	/* "fmt" */
 	"log"
 	"strings"
 )
@@ -718,10 +718,10 @@ func walk() node {
 // be tested against easily and then represent the function associoated with it.
 //
 // e.g.
-// "NumberLiteral" : func(n *node, p node) {
-//     // do something
-// }
 //
+//	"NumberLiteral" : func(n *node, p node) {
+//	    // do something
+//	}
 type visitor map[string]func(n *node, p node)
 
 // So we define a traverser function which accepts an AST and a
@@ -998,8 +998,9 @@ func compiler(input string) string {
 	return out
 }
 
-func main() {
+/* func main() {
 	program := "(add 10 (subtract 10 6))"
 	out := compiler(program)
 	fmt.Println(out)
 }
+*/

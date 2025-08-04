@@ -8,7 +8,7 @@ export default class CoreTimeline extends StoryBoardManager implements ICoreTime
 
         private constructor() { super(CoreTimeline.name) }
 
-        static instance(): ICoreTimeline {
+        static instance(): CoreTimeline {
                 if (!CoreTimeline.TIMELINE_INSTANCE) CoreTimeline.TIMELINE_INSTANCE = new CoreTimeline();
                 return CoreTimeline.TIMELINE_INSTANCE;
         }

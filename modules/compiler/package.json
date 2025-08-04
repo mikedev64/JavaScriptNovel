@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "node .",
-    "start": "node main.js",
+    "start": "node compile.js",
     "build": "go build ."
   },
   "keywords": [],

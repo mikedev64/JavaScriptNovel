@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "scripts": {
     "core:test": "npm run test -w modules/core",
+    "core:server:test": "npm run server:test -w modules/core",
     "core:build": "npm run build -w modules/core",
 
     "compiler:dev": "npm run dev -w modules/compiler",

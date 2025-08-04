@@ -17,7 +17,7 @@ export default class CorePersistent extends ErrorHandler implements ICorePersist
          * Crea o devuelve la instancia unica de la clase
          * @returns {ICorePersistent} ICorePersistent
          */
-        static instance(): ICorePersistent {
+        static instance(): CorePersistent {
                 if (!CorePersistent.INSTANCE) CorePersistent.INSTANCE = new CorePersistent();
                 return CorePersistent.INSTANCE
         }

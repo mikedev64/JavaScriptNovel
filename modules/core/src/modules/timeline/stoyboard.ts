@@ -3,14 +3,11 @@ import { FetchAPI } from "../../../utils";
 import ErrorHandler from "../error";
 
 export class StoryBoardManager extends ErrorHandler implements IStoryboardManager {
-        private static STORYBOARD_INSTANCE: StoryBoardManager | null
         private CollectionScenes: Map<TMapKey, TMapValue | InterpreterActions.IMapActionScene> = new Map()
         private sceneValueCounter: number = 1
 
         constructor(name?: string) {
-                super(name || StoryBoardManager.name)
-                if (!StoryBoardManager.STORYBOARD_INSTANCE) StoryBoardManager.STORYBOARD_INSTANCE = new StoryBoardManager();
-                return StoryBoardManager.STORYBOARD_INSTANCE
+                super(name ?? StoryBoardManager.name)
         }
 
         async initializeStoryBoard(): Promise<void | null> {
