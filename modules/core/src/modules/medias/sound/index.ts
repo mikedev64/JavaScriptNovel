@@ -1,10 +1,11 @@
 import { fecthFiles } from "./utils/fecthFile"
 import { CoreGenerics } from "../../../../types/generics"
 import ErrorHandler from "../../error"
+import { bytesToSize } from "../../../../utils"
 
 export default class AudioManager extends ErrorHandler implements IAudioManager {
         private static INSTANCE: AudioManager | null
-        private Collection: Map<TMapKey, TMapValue>
+        private Collection: Map<TMapKey, TMapValue> = new Map()
 
         private constructor() {
                 super(AudioManager.name)
@@ -55,7 +56,7 @@ export default class AudioManager extends ErrorHandler implements IAudioManager 
                         BlobBruto: audioBlob,
                         BlobUrl: null,
                         createdAt: Date.now(),
-                        size: audioBlob.size
+                        size: bytesToSize(audioBlob.size)
                 }
 
                 this.Collection.set(name, AudioObject)
@@ -70,25 +71,35 @@ export default class AudioManager extends ErrorHandler implements IAudioManager 
                         return this.logErrorInfo("prepareMedia", `El audio con el nombre '${name}' no existe en la colección`)
                 }
 
+                if (audioElement[name].BlobUrl) {
+                        this.logWarningInfo("prepareMedia", `El audio '${name}' ya está preparado en memoria`)
+                        return audioElement
+                }
+
+                audioElement[name].BlobUrl = URL.createObjectURL(audioElement[name].BlobBruto)
+                this.Collection.set(name, audioElement[name])
+
                 return audioElement
         }
 
         removeMemoryMedia(name: string): parseStruct {
-                if (typeof name !== "string") {
-                        return this.logErrorInfo("removeMedia", "El nombre del audio debe ser un string")
-                }
-
                 const audioElement = this.getAudioElement(name)
 
                 if (!audioElement) {
                         return this.logErrorInfo("removeMedia", `El audio con el nombre '${name}' no existe en la colección`)
                 }
 
+                if (!audioElement[name].BlobUrl) {
+                        this.logErrorInfo("removeMedia", `El audio '${name}' no está preparado en memoria`)
+                        return audioElement
+                }
+                
+                URL.revokeObjectURL(audioElement[name].BlobUrl as string);
                 audioElement[name].BlobUrl = null
 
                 this.Collection.set(name, audioElement[name])
 
-                return { [name]: audioElement[name] }
+                return audioElement
         }
 }
 
@@ -97,7 +108,7 @@ type TMapValue = {
         BlobBruto: Blob
         BlobUrl: string | null
         createdAt: number
-        size: number
+        size: string
 }
 type parseStruct = { [K in TMapKey]: TMapValue } | null
 

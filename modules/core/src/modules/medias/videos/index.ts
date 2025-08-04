@@ -1,10 +1,11 @@
 import { fecthFiles } from "./utils/fecthFile"
 import { CoreGenerics } from "../../../../types/generics"
 import ErrorHandler from "../../error"
+import { bytesToSize } from "../../../../utils"
 
 export default class VideoManager extends ErrorHandler implements IVideoManager {
         private static INSTANCE: VideoManager | null
-        private Collection: Map<TMapKey, TMapValue>
+        private Collection: Map<TMapKey, TMapValue> = new Map()
 
         private constructor() {
                 super(VideoManager.name)
@@ -15,7 +16,7 @@ export default class VideoManager extends ErrorHandler implements IVideoManager 
          * Crea o devuelve la instancia unica de la clase
          * @returns {IVideoManager} IVideoManager
          */
-        static instance(): IVideoManager {
+        static instance(): VideoManager {
                 if (!VideoManager.INSTANCE) VideoManager.INSTANCE = new VideoManager();
                 return VideoManager.INSTANCE
         }
@@ -65,7 +66,7 @@ export default class VideoManager extends ErrorHandler implements IVideoManager 
                         BlobBruto: videoBlob,
                         BlobUrl: null,
                         createdAt: Date.now(),
-                        size: videoBlob.size
+                        size: bytesToSize(videoBlob.size)
                 }
 
                 this.Collection.set(name, VideoObject)
@@ -80,20 +81,30 @@ export default class VideoManager extends ErrorHandler implements IVideoManager 
                         return this.logErrorInfo("prepareMedia", `El video con el nombre '${name}' no existe en la colección`)
                 }
 
+                if (videoElement[name].BlobUrl) {
+                        this.logWarningInfo("prepareMedia", `El video '${name}' ya está preparado en memoria`)
+                        return videoElement
+                }
+
+                videoElement[name].BlobUrl = URL.createObjectURL(videoElement[name].BlobBruto)
+                this.Collection.set(name, videoElement[name])
+
                 return videoElement
         }
 
         removeMemoryMedia(name: string): parseStruct {
-                if (typeof name !== "string") {
-                        return this.logErrorInfo("removeMedia", "El nombre del video debe ser un string")
-                }
-
                 const videoElement = this.getVideoElement(name)
 
                 if (!videoElement) {
                         return this.logErrorInfo("removeMedia", `El video con el nombre '${name}' no existe en la colección`)
                 }
 
+                if (!videoElement[name].BlobUrl) {
+                        this.logErrorInfo("removeMedia", `El video '${name}' no está preparado en memoria`)
+                        return videoElement
+                }
+
+                URL.revokeObjectURL(videoElement[name].BlobUrl as string);
                 videoElement[name].BlobUrl = null
 
                 this.Collection.set(name, videoElement[name])
@@ -107,7 +118,7 @@ type TMapValue = {
         BlobBruto: Blob
         BlobUrl: string | null
         createdAt: number
-        size: number
+        size: string
 }
 type parseStruct = { [K in TMapKey]: TMapValue } | null
 

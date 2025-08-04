@@ -1,6 +1,7 @@
 import { fecthFiles } from "./utils/fecthFile"
 import { CoreGenerics } from "../../../../types/generics"
 import ErrorHandler from "../../error"
+import { bytesToSize } from "../../../../utils"
 
 export default class ImageManager extends ErrorHandler implements IImageManager {
         private static INSTANCE: ImageManager | null
@@ -11,7 +12,7 @@ export default class ImageManager extends ErrorHandler implements IImageManager 
                 this.Collection = new Map()
         }
 
-        static instance() {
+        static instance(): ImageManager {
                 if (!ImageManager.INSTANCE) ImageManager.INSTANCE = new ImageManager();
                 return ImageManager.INSTANCE
         }
@@ -55,7 +56,7 @@ export default class ImageManager extends ErrorHandler implements IImageManager 
                         BlobBruto: imageBlob,
                         BlobUrl: null,
                         createdAt: Date.now(),
-                        size: imageBlob.size
+                        size: bytesToSize(imageBlob.size)
                 }
 
                 this.Collection.set(name, ImageObject)
@@ -89,7 +90,14 @@ export default class ImageManager extends ErrorHandler implements IImageManager 
                         return this.logErrorInfo("removeMedia", `La imagen con el nombre '${name}' no existe en la colección`)
                 }
 
+                if (!imageElement[name].BlobUrl) {
+                        this.logErrorInfo("removeMedia", `La imagen '${name}' no está preparada en memoria`)
+                        return imageElement
+                }
+
+                URL.revokeObjectURL(imageElement[name].BlobUrl as string);
                 imageElement[name].BlobUrl = null
+
                 this.Collection.set(name, imageElement[name])
 
                 return imageElement
@@ -101,7 +109,7 @@ type TMapValue = {
         BlobBruto: Blob
         BlobUrl: string | null
         createdAt: number
-        size: number
+        size: string
 }
 type parseStruct = { [K in TMapKey]: TMapValue } | null
 

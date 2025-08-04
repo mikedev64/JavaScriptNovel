@@ -170,3 +170,15 @@ export async function FetchAPI<T>(url: string, options?: RequestInit): Promise<T
                 return new ErrorHandler("Utils").logErrorInfo(FetchAPI.name, `Error fetching API: ${error}`);
         }
 }
+
+/**
+ * Convierte un número de bytes a una cadena legible (Bytes, KB, MB, etc.)
+ * @param bytes Número de bytes a convertir
+ * @returns {string} Cadena legible representando el tamaño
+ */
+export function bytesToSize(bytes: number): string {
+        if (bytes === 0) return '0 Bytes';
+        const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+        const i = Math.floor(Math.log(bytes) / Math.log(1024));
+        return `${parseFloat((bytes / Math.pow(1024, i)).toFixed(2))} ${sizes[i]}`;
+}

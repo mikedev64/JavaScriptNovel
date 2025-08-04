@@ -8,9 +8,15 @@
     "server:test": "tsc --esModuleInterop true --module nodenext --moduleResolution nodenext ./server/index.ts && node ./server/index.js",
     "build": "tsc"
   },
-  "keywords": [],
+  "keywords": [
+    "visual-novel",
+    "game-engine",
+    "javascript",
+    "typescript",
+    "novel"
+  ],
   "author": "PintoDev64",
-  "license": "ISC",
+  "license": "GPL-3.0-only",
   "description": "Visual Novel Game Engine Core",
   "devDependencies": {
     "@types/express": "^5.0.3",

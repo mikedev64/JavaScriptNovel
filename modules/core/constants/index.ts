@@ -5,9 +5,9 @@ export const LocationFiles = {
                 /* test: "/test/videos/" */
         },
         audio: {
-                production: "/public/audio/",
-                development: "http://localhost:4322/resources/audio/",
-                /* test: "/test/audio/" */
+                production: "/public/sounds/",
+                development: "http://localhost:4322/resources/sounds/",
+                /* test: "/test/sounds/" */
         },
         images: {
                 production: "/public/images/",
