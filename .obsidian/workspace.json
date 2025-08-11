@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "README.md",
+                "file": "modules/compiler/README.md",
                 "mode": "source",
                 "source": false
               },
@@ -170,6 +170,7 @@
   },
   "active": "2c02fad6ad1f0b9e",
   "lastOpenFiles": [
+    "README.md",
     "LICENSE",
     "modules/compiler/main.go",
     "modules/compiler/go.mod"
