@@ -8,7 +8,10 @@
 
     "compiler:dev": "npm run dev -w modules/compiler",
     "compiler:start": "npm run start -w modules/compiler",
-    "compiler:build": "npm run build -w modules/compiler"
+    "compiler:build": "npm run build -w modules/compiler",
+
+    "docs:dev": "npm run dev -w modules/documentation",
+    "docs:build": "npm run build -w modules/documentation"
   },
   "workspaces": [
     "modules/*",
