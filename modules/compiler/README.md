@@ -1,39 +1,29 @@
 # @noveljs/compiler
-Este paquete contiene el compilador de archivos NovelScript (.jvn) y retorna un JSON estructurado para interpretar las historias escritas en el lenguaje.
 
-## Contrato JSON
-Estructura de compilacion con nombre y tipo de TypeScript
+> [!IMPORTANT]
+> **The compiler is a fundamental piece for the engine, and an extensibility system is planned for it**
 
-#### Node Base del programa
+This package contains the compiler for NovelScript (.jvn) files and returns a structured JSON to interpret stories written in the language.
+
+## JSON Contract
+Compilation structure with TypeScript name and type
+
+### Program base node
 ```ts
 interface Start {
         type: "Program";
-        body: BlockInstruction[];
+        body: IInstruction<TInstructionType>[];
 }
 ```
 
-#### Node de los bloques de intruccion (escenas)
+### Instruction node
 ```ts
-interface BlockInstruction {
-        scene: string;
-        body: Instruction[];
-        metadata: {
-                file: string;
-                path: string;
-        }
-}
-```
-
-> Este es un tipo generico y una version simplificada del mismo, se recomienda mirar la documentacion de [Instruction Generic Type](#)
-
-#### Node de intruccion
-```ts
-interface Instruction {
+export interface IInstruction<T extends TInstructionType> {
         value: string | number | boolean;
         lin: number;
         arguments: (string | number | boolean)[];
-        body: IInstructionStruct[];
-        type:
+        body: IInstruction<TInstructionType>[];
+        type: /* Generic T */
                 | 'volume'
                 | 'play'
                 | 'pause'
@@ -49,20 +39,22 @@ interface Instruction {
                 | 'background'
                 | 'draw'
                 | 'undraw';
-        modificators:
-                | 'start'
-                | 'loop'
-                | 'fade'
-                | 'draw';
+        modificators: 
+                T extends "play" ? "loop" :
+                T extends "scene" ? ("fade" | "start") :
+                null;
         directives:
-                | Instruction
-                | (
-                        | "string"
-                        | "number"
-                        | "boolean"
-                        | "audio"
-                        | "video"
-                        | "image"
-                );
+                T extends "variable" ? ("string" | "number" | "boolean") :
+                T extends "audio" ? "audio" :
+                T extends "video" ? "video" :
+                T extends "image" ? "image" :
+                null;
+        metadata?: {
+                file: string;
+                path: string;
+        }
 }
 ```
+
+> [!IMPORTANT]
+> This is a generic type and a simplified version of everything it contains. It is recommended to check the documentation for [Instruction Generic Type](#)
