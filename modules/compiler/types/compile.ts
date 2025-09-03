@@ -30,18 +30,18 @@ type TInstructionModificator<T extends TInstructionType> =
         null;
 
 type TInstructionType =
-        | 'volume'
-        | 'play'
-        | 'pause'
-        | 'callExpression'
-        | 'jump'
-        | 'update'
-        | 'variable'
-        | 'audio'
-        | 'video'
-        | 'image'
-        | 'dialogue'
-        | 'scene'
-        | 'background'
-        | 'draw'
-        | 'undraw'
+        | "volume"
+        | "play"
+        | "pause"
+        | "callExpression"
+        | "jump"
+        | "update"
+        | "variable"
+        | "audio"
+        | "video"
+        | "image"
+        | "dialogue"
+        | "scene"
+        | "background"
+        | "draw"
+        | "undraw"

@@ -1,11 +1,14 @@
 {
   "name": "@jsnovel/compiler",
   "version": "0.0.1",
-  "description": "",
+  "description": "hola",
+  "main": "./dist/src/typescript/index.js",
   "type": "module",
   "scripts": {
-    "dev": "node .",
-    "start": "node compile.js"
+    "dev": "tsc && node .",
+    "test": "vitest",
+    "build": "tsc",
+    "start": "node ."
   },
   "keywords": [],
   "author": "",
