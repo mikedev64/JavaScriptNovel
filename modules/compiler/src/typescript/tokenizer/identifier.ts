@@ -10,7 +10,6 @@ export function textToken(line: number, column: number, currentLine: string): re
         };
 
         let iteration = column;
-        console.log("Start: ", iteration);
 
         while (iteration < currentLine.length) {
 
@@ -30,6 +29,7 @@ export function textToken(line: number, column: number, currentLine: string): re
                 }
         }
 
+        token.column++
         return [iteration - column, token];
 }
 
@@ -48,7 +48,7 @@ export function quoteToken(line: number, column: number, currentLine: string): r
         }
 
         token.value = char;
-
+        token.column++
         return [column, token];
 }
 
@@ -63,6 +63,6 @@ export function parenToken(line: number, column: number, currentLine: string): r
         const char = currentLine[column];
 
         token.value = char;
-
+        token.column++
         return [column, token];
 }

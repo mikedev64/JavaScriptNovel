@@ -36,6 +36,8 @@ export default function createTokenList(line: number, currentLine: string): ITok
                         continue;
                 }
 
+                
+
                 if (SPACE_REGEX.exec(currentLine[column]) !== null) {
                         continue;
                 }
