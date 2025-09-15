@@ -54,16 +54,12 @@ export default function createTokenList(line: number, currentLine: string): ITok
                         continue;
                 }
 
-<<<<<<< HEAD
                 if (BRACKET_REGEX.exec(currentLine[column]) !== null) {
                         const [_column, token] = bracketToken(line, column, currentLine);
 
                         Tokens.push(token);
                         continue;
                 }
-=======
-                
->>>>>>> 14bec1a485ac015201694f6a4d19e6bd2df62407
 
                 if (SPACE_REGEX.exec(currentLine[column]) !== null) {
                         continue;

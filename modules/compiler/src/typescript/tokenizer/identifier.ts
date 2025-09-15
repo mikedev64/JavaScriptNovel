@@ -136,7 +136,6 @@ export function parenToken(line: number, column: number, currentLine: string): r
 export function keysToken(line: number, column: number, currentLine: string): returnToken {
         const char = currentLine[column];
 
-<<<<<<< HEAD
         const token: IToken<"keys"> = {
                 type: "keys",
                 value: char,
@@ -157,9 +156,5 @@ export function bracketToken(line: number, column: number, currentLine: string):
                 column
         };
 
-=======
-        token.value = char;
-        token.column++
->>>>>>> 14bec1a485ac015201694f6a4d19e6bd2df62407
         return [column, token];
 }
