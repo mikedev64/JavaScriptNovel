@@ -11,7 +11,6 @@ export function textToken(line: number, column: number, currentLine: string): re
         };
 
         let iteration = column;
-        console.log("Start: ", iteration);
 
         while (iteration < currentLine.length) {
 
@@ -31,6 +30,7 @@ export function textToken(line: number, column: number, currentLine: string): re
                 }
         }
 
+        token.column++
         return [iteration - column, token];
 }
 
@@ -116,7 +116,7 @@ export function quoteToken(line: number, column: number, currentLine: string): r
         }
 
         token.value = char;
-
+        token.column++
         return [column, token];
 }
 
@@ -136,6 +136,7 @@ export function parenToken(line: number, column: number, currentLine: string): r
 export function keysToken(line: number, column: number, currentLine: string): returnToken {
         const char = currentLine[column];
 
+<<<<<<< HEAD
         const token: IToken<"keys"> = {
                 type: "keys",
                 value: char,
@@ -156,5 +157,9 @@ export function bracketToken(line: number, column: number, currentLine: string):
                 column
         };
 
+=======
+        token.value = char;
+        token.column++
+>>>>>>> 14bec1a485ac015201694f6a4d19e6bd2df62407
         return [column, token];
 }
