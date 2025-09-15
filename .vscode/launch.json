@@ -1,0 +1,23 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug Compiler",
+            "type": "node",
+            "request": "launch",
+            "program": "${workspaceFolder}/modules/compiler/dist/src/typescript/index.js",
+            "cwd": "${workspaceFolder}/modules/compiler",
+            "sourceMaps": true,
+            "console": "integratedTerminal",
+            "skipFiles": ["<node_internals>/**"],
+            "preLaunchTask": "compile",
+            "outFiles": [
+                "${workspaceFolder}/modules/compiler/dist/**/*.js"
+            ],
+            "resolveSourceMapLocations": [
+                "${workspaceFolder}/modules/compiler/src/**",
+                "${workspaceFolder}/modules/compiler/dist/**"
+            ]
+        }
+    ]
+}
