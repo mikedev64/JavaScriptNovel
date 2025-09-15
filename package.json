@@ -1,25 +1,39 @@
 {
-  "name": "javascriptnovel",
-  "version": "0.0.1",
-  "scripts": {
-    "core:test": "npm run test -w modules/core",
-    "core:server:test": "npm run server:test -w modules/core",
-    "core:build": "npm run build -w modules/core",
+	"name": "javascriptnovel",
+	"version": "0.0.1",
+	"scripts": {
+		"core:test": "npm run test -w modules/core",
+		"core:server:test": "npm run server:test -w modules/core",
+		"core:build": "npm run build -w modules/core",
 
-    "compiler:dev": "npm run dev -w modules/compiler",
-    "compiler:start": "npm run start -w modules/compiler",
-    "compiler:test": "npm run test -w modules/compiler",
-    "compiler:build": "npm run build -w modules/compiler",
+		"compiler:dev": "npm run dev -w modules/compiler",
+		"compiler:start": "npm run start -w modules/compiler",
+		"compiler:test": "npm run test -w modules/compiler",
+		"compiler:build": "npm run build -w modules/compiler",
 
-    "docs:dev": "npm run dev -w modules/documentation",
-    "docs:build": "npm run build -w modules/documentation"
-  },
-  "workspaces": [
-    "modules/*",
-    "editor",
-    "prototypes/*"
-  ],
-  "author": "PintoDev64",
-  "description": "Visual Novel Game Engine For JavaScript/TypeScript",
-  "license": "MIT"
+		"docs:dev": "npm run dev -w modules/documentation",
+		"docs:build": "npm run build -w modules/documentation",
+
+		"lint": "eslint . --ext .ts,.js,.json",
+		"lint:fix": "eslint . --ext .ts,.js,.json --fix",
+    
+		"format": "prettier --write .",
+		"format:check": "prettier --check ."
+	},
+	"workspaces": [
+		"modules/*",
+		"editor",
+		"prototypes/*"
+	],
+	"author": "PintoDev64",
+	"description": "Visual Novel Game Engine For JavaScript/TypeScript",
+	"license": "MIT",
+	"devDependencies": {
+		"@eslint/js": "^9.35.0",
+		"@typescript-eslint/eslint-plugin": "^8.44.0",
+		"@typescript-eslint/parser": "^8.44.0",
+		"eslint": "^9.35.0",
+		"eslint-config-prettier": "^10.1.8",
+		"eslint-plugin-prettier": "^5.5.4"
+	}
 }
