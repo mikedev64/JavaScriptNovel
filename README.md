@@ -45,11 +45,11 @@ Consulta la carpeta `/docs` para detalles completos.
 
 ## 🧪 Estado del proyecto
 
-- 🧩 En progreso: MVP: render en Canvas 2D
-- 🧩 En progreso: Compilador .jvn básico
-- 🧩 En progreso: Guardado local (LocalStorage)
-- 🧩 En progreso: adaptadores React/Vue
-- 🧩 En progreso: bundler de assets
+- [ ] En progreso: render en Canvas 2D
+- [ ] En progreso: Compilador .jvn básico
+- [ ] En progreso: Guardado local (LocalStorage)
+- [ ] En progreso: adaptadores React/Vue
+- [ ] En progreso: bundler de assets
 
 ---
 
@@ -68,4 +68,4 @@ GNU GENERAL PUBLIC LICENSE v3.0 © PintoDev64
 - Evita monolitos confusos de scripts e interfaz.
 - Control total sobre cómo y dónde se ejecuta.
 
-_Disfruta crear historias interactivas, sin sacrificar orden y rendimiento._
+_Disfruta crear historias interactivas, sin sacrificar orden_

@@ -1,7 +1,7 @@
 // Constants
-import { DOUBLE_QUOTE_REGEX, PARENTHESIS_REGEX,SINGLE_QUOTE_REGEX,SPACE_REGEX, TEXT_REGEX } from "../../../constants/index.js";
+import { BRACKET_REGEX, DOUBLE_QUOTE_REGEX, KEYS_REGEX, NUMBER_REGEX, PARENTHESIS_REGEX, SINGLE_QUOTE_REGEX, SPACE_REGEX, TEXT_REGEX } from "../../../constants/index.js";
 // Functions
-import { parenToken, quoteToken, textToken } from "./identifier.js";
+import { bracketToken, keysToken, numberToken, parenToken, quoteToken, textToken } from "./identifier.js";
 // Types
 import type { IToken, TTokenType } from "../../../types/token";
 
@@ -22,15 +22,40 @@ export default function createTokenList(line: number, currentLine: string): ITok
                         continue;
                 }
 
-                if (currentLine[column] === "\"" || currentLine[column] === "\'") {
+                if (NUMBER_REGEX.exec(currentLine[column]) !== null) {
+                        const [_column, token] = numberToken(line, column, currentLine);
+                        column += _column - 1;
+
+                        Tokens.push(token);
+                        continue;
+                }
+
+                if (KEYS_REGEX.exec(currentLine[column]) !== null) {
+                        const [_column, token] = keysToken(line, column, currentLine);
+
+                        Tokens.push(token);
+                        continue;
+                }
+
+                if (
+                        DOUBLE_QUOTE_REGEX.exec(currentLine[column]) !== null ||
+                        SINGLE_QUOTE_REGEX.exec(currentLine[column]) !== null
+                ) {
                         const [_column, token] = quoteToken(line, column, currentLine);
 
                         Tokens.push(token);
                         continue;
                 }
-                
-                if (currentLine[column] === "(" || currentLine[column] === ")") {
+
+                if (PARENTHESIS_REGEX.exec(currentLine[column]) !== null) {
                         const [_column, token] = parenToken(line, column, currentLine);
+
+                        Tokens.push(token);
+                        continue;
+                }
+
+                if (BRACKET_REGEX.exec(currentLine[column]) !== null) {
+                        const [_column, token] = bracketToken(line, column, currentLine);
 
                         Tokens.push(token);
                         continue;

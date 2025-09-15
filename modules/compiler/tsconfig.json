@@ -24,5 +24,9 @@
     "sourceMap": true,                                // Debugging en navegador
   },
   "include": ["src", "constants", "utils", "types"],  // Lo que quieres compilar
-  "exclude": ["node_modules", "dist", "test", "server"]         // Carpetas ignoradas
+  "exclude": ["node_modules", "dist", "test", "server"],         // Carpetas ignoradas
+  "ts-node": {
+    "esm": true,
+    "experimentalSpecifierResolution": "node"
+  }
 }
