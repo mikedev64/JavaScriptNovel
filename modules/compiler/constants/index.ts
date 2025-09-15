@@ -10,6 +10,7 @@ export const PARENTHESIS_REGEX = /^[\(\)]$/;
 export const BRACKET_REGEX = /^[\[\]]$/;
 export const KEYS_REGEX = /^[\{\}]$/;
 export const SPACE_REGEX = /^\s+$/;
+export const OPERATOR_REGEX = /^[\+\-\*\/\=]$/;
 
 export const KEYWORDS = [
         "scene",

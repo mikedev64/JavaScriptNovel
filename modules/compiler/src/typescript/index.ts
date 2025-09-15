@@ -20,7 +20,7 @@ export default async function novelScriptCompiler(script_url: string) {
                 compiled.push(tokenList)
         }
         
-        console.log(compiled);
+        console.log("compiled: ",compiled);
 }
 
 novelScriptCompiler("./resources/")

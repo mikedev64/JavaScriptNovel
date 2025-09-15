@@ -1,7 +1,7 @@
 // Constants
-import { BRACKET_REGEX, DOUBLE_QUOTE_REGEX, KEYS_REGEX, NUMBER_REGEX, PARENTHESIS_REGEX, SINGLE_QUOTE_REGEX, SPACE_REGEX, TEXT_REGEX } from "../../../constants/index.js";
+import { BRACKET_REGEX, DOUBLE_QUOTE_REGEX, KEYS_REGEX, NUMBER_REGEX, OPERATOR_REGEX, PARENTHESIS_REGEX, SINGLE_QUOTE_REGEX, SPACE_REGEX, TEXT_REGEX } from "../../../constants/index.js";
 // Functions
-import { bracketToken, keysToken, numberToken, parenToken, quoteToken, textToken } from "./identifier.js";
+import { bracketToken, keysToken, numberToken, operatorToken, parenToken, quoteToken, textToken } from "./identifier.js";
 // Types
 import type { IToken, TTokenType } from "../../../types/token";
 
@@ -56,6 +56,13 @@ export default function createTokenList(line: number, currentLine: string): ITok
 
                 if (BRACKET_REGEX.exec(currentLine[column]) !== null) {
                         const [_column, token] = bracketToken(line, column, currentLine);
+
+                        Tokens.push(token);
+                        continue;
+                }
+
+                if (OPERATOR_REGEX.exec(currentLine[column]) !== null) {
+                        const [_column, token] = operatorToken(line, column, currentLine);
 
                         Tokens.push(token);
                         continue;

@@ -7,13 +7,12 @@ export function textToken(line: number, column: number, currentLine: string): re
                 type: "text",
                 value: "",
                 line: line + 1,
-                column
+                column: column + 1
         };
 
         let iteration = column;
 
         while (iteration < currentLine.length) {
-
                 if (KEYWORDS.includes(token.value)) {
                         token.type = "keyword";
                         break;
@@ -30,7 +29,6 @@ export function textToken(line: number, column: number, currentLine: string): re
                 }
         }
 
-        token.column++
         return [iteration - column, token];
 }
 
@@ -39,7 +37,7 @@ export function numberToken(line: number, column: number, currentLine: string): 
                 type: "number",
                 value: 0,
                 line: line + 1,
-                column
+                column: column + 1
         };
 
         let valueStr = "";
@@ -48,14 +46,11 @@ export function numberToken(line: number, column: number, currentLine: string): 
         while (iteration < currentLine.length) {
                 const char = currentLine[iteration];
 
-                // Si encontramos un punto decimal
                 if (FLOAT_POINT_REGEX.test(char)) {
-                        // Si ya hay un punto, es un error
                         if (valueStr.includes(".")) {
                                 throw new JVNError(`Unexpected float point at line ${line + 1}, column ${iteration + 1}`);
                         }
-                        
-                        // Si no hay números antes del punto, es inválido
+
                         if (valueStr === "") {
                                 break;
                         }
@@ -66,29 +61,22 @@ export function numberToken(line: number, column: number, currentLine: string): 
                         continue;
                 }
 
-                // Si es un dígito
                 if (NUMBER_REGEX.test(char)) {
                         valueStr += char;
                         iteration++;
                         continue;
                 } else {
-                        // Ya no hay más dígitos válidos, terminar
                         break;
                 }
         }
-
-        // Convertir el string a número
-        console.log("valueStr:", valueStr, "token.type:", token.type);
         if (valueStr !== "") {
                 if (token.type === "float") {
                         const value = parseFloat(valueStr);
-                        console.log("parseFloat result:", value, "isNaN:", isNaN(value));
                         if (!isNaN(value)) {
                                 token.value = value;
                         }
                 } else {
                         const value = parseInt(valueStr, 10);
-                        console.log("parseInt result:", value, "isNaN:", isNaN(value));
                         if (!isNaN(value)) {
                                 token.value = value;
                         }
@@ -97,7 +85,6 @@ export function numberToken(line: number, column: number, currentLine: string): 
                 console.log("valueStr is empty!");
         }
 
-        console.log("Final token:", token);
         return [iteration - column, token];
 }
 
@@ -106,7 +93,7 @@ export function quoteToken(line: number, column: number, currentLine: string): r
                 type: "double_quote",
                 value: "",
                 line: line + 1,
-                column
+                column: column + 1
         };
 
         const char = currentLine[column];
@@ -116,7 +103,6 @@ export function quoteToken(line: number, column: number, currentLine: string): r
         }
 
         token.value = char;
-        token.column++
         return [column, token];
 }
 
@@ -127,7 +113,7 @@ export function parenToken(line: number, column: number, currentLine: string): r
                 type: "parenthesis",
                 value: char,
                 line: line + 1,
-                column
+                column: column + 1
         };
 
         return [column, token];
@@ -140,7 +126,20 @@ export function keysToken(line: number, column: number, currentLine: string): re
                 type: "keys",
                 value: char,
                 line: line + 1,
-                column
+                column: column + 1
+        };
+
+        return [column, token];
+}
+
+export function operatorToken(line: number, column: number, currentLine: string): returnToken {
+        const char = currentLine[column];
+
+        const token: IToken<"operator"> = {
+                type: "operator",
+                value: char,
+                line: line + 1,
+                column: column + 1
         };
 
         return [column, token];
@@ -153,7 +152,7 @@ export function bracketToken(line: number, column: number, currentLine: string):
                 type: "bracket",
                 value: char,
                 line: line + 1,
-                column
+                column: column + 1
         };
 
         return [column, token];
