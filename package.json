@@ -1,6 +1,7 @@
 {
 	"name": "javascriptnovel",
 	"version": "0.0.1",
+	"type": "module",
 	"scripts": {
 		"core:test": "npm run test -w modules/core",
 		"core:server:test": "npm run server:test -w modules/core",

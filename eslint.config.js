@@ -1,12 +1,11 @@
-import js from "@eslint/js";
 import tseslint from "@typescript-eslint/eslint-plugin";
 import tsparser from "@typescript-eslint/parser";
 import prettier from "eslint-plugin-prettier";
 
 export default [
-	js.configs.recommended,
 	{
 		files: ["**/*.{js,mjs,cjs,ts}"],
+		ignores: ["eslint.config.js", "**/*.json"],
 		languageOptions: {
 			parser: tsparser,
 			parserOptions: {
@@ -14,7 +13,6 @@ export default [
 				sourceType: "module",
 				project: [
 					"./modules/*/tsconfig.json",
-					"./tsconfig.json"
 				]
 			},
 			globals: {
@@ -44,24 +42,33 @@ export default [
 			"prettier/prettier": "error",
 			"semi": ["error", "always"],
 			"quotes": ["error", "double"],
-			"indent": ["error", "tab", { "SwitchCase": 1 }],
+			"indent": ["error", 8, { "SwitchCase": 1 }],
 			"max-len": ["warn", { "code": 100, "tabWidth": 8 }],
 			"comma-dangle": ["error", "always-multiline"],
 			"no-trailing-spaces": "error",
 			"eol-last": "error",
+			"linebreak-style": "off",
 			"no-multiple-empty-lines": ["error", { "max": 2, "maxEOF": 1 }],
 			"space-before-function-paren": ["error", "never"],
 			"brace-style": ["error", "1tbs"],
 			"comma-spacing": ["error", { "before": false, "after": true }],
 			"key-spacing": ["error", { "beforeColon": false, "afterColon": true }],
-			"no-unused-vars": "off",
-			"@typescript-eslint/no-unused-vars": ["warn", { "argsIgnorePattern": "^_" }],
-			"no-console": "off",
+			"no-unused-vars": ["error", { 
+				"args": "after-used", 
+				"argsIgnorePattern": "^_",
+				"varsIgnorePattern": "^_"
+			}],
+			"@typescript-eslint/no-unused-vars": ["error", { 
+				"args": "after-used", 
+				"argsIgnorePattern": "^_",
+				"varsIgnorePattern": "^_"
+			}],
+			"no-console": "warn",
 			"@typescript-eslint/explicit-function-return-type": "off",
 			"@typescript-eslint/explicit-module-boundary-types": "off",
-			"@typescript-eslint/no-explicit-any": "warn",
+			"@typescript-eslint/no-explicit-any": "error",
 			"@typescript-eslint/no-var-requires": "error",
-			"@typescript-eslint/prefer-const": "error"
+			"prefer-const": "error"
 		}
 	},
 	{
@@ -122,7 +129,11 @@ export default [
 			"*.js.map",
 			"**/*.js.map",
 			"coverage/",
-			"**/coverage/"
+			"**/coverage/",
+			"**/*.json",
+			".obsidian/",
+			".vscode/",
+			"**/guides/*.js"
 		]
 	}
 ];

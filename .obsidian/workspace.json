@@ -189,8 +189,12 @@
       "command-palette:Abrir paleta de comandos": false
     }
   },
-  "active": "b724a16140f8a933",
+  "active": "8d794fb949b77332",
   "lastOpenFiles": [
+    "modules/compiler/src/typescript/memory/index.ts",
+    "modules/compiler/src/typescript/memory",
+    "modules/compiler/dist/types/parser.js",
+    "modules/compiler/dist/types/parser.js.map",
     "README.md",
     "modules/compiler/README.md",
     "modules/compiler/Sin título.base",
