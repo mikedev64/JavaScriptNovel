@@ -21,9 +21,10 @@ export const KEYWORDS = [
         "audio",
         "video",
         "image",
+        "jump",
         "volume",
         "play",
         "pause",
         "draw",
-        "undraw"
-]
+        "undraw",
+];

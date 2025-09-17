@@ -1,13 +1,19 @@
-import { FLOAT_POINT_REGEX, KEYWORDS, NUMBER_REGEX, SINGLE_QUOTE_REGEX, SPACE_REGEX, TEXT_REGEX_FULL } from "../../../constants/index.js";
+import {
+        FLOAT_POINT_REGEX,
+        KEYWORDS,
+        NUMBER_REGEX,
+        SINGLE_QUOTE_REGEX,
+        TEXT_REGEX_FULL,
+} from "./constants/index.js";
 import { IToken, returnToken } from "../../../types/token";
-import JVNError from "../error/index.js";
+import JVNCompilerError from "../error/index.js";
 
 export function textToken(line: number, column: number, currentLine: string): returnToken {
         const token: IToken<"text" | "keyword"> = {
                 type: "text",
                 value: "",
                 line: line + 1,
-                column: column + 1
+                column: column + 1,
         };
 
         let iteration = column;
@@ -22,7 +28,7 @@ export function textToken(line: number, column: number, currentLine: string): re
 
                 if (TEXT_REGEX_FULL.exec(char) !== null) {
                         token.value += char;
-                        iteration++
+                        iteration++;
                         continue;
                 } else {
                         break;
@@ -37,7 +43,7 @@ export function numberToken(line: number, column: number, currentLine: string): 
                 type: "number",
                 value: 0,
                 line: line + 1,
-                column: column + 1
+                column: column + 1,
         };
 
         let valueStr = "";
@@ -48,7 +54,9 @@ export function numberToken(line: number, column: number, currentLine: string): 
 
                 if (FLOAT_POINT_REGEX.test(char)) {
                         if (valueStr.includes(".")) {
-                                throw new JVNError(`Unexpected float point at line ${line + 1}, column ${iteration + 1}`);
+                                throw new JVNCompilerError(
+                                        `Unexpected float point at line ${line + 1}, column ${iteration + 1}`,
+                                );
                         }
 
                         if (valueStr === "") {
@@ -93,7 +101,7 @@ export function quoteToken(line: number, column: number, currentLine: string): r
                 type: "double_quote",
                 value: "",
                 line: line + 1,
-                column: column + 1
+                column: column + 1,
         };
 
         const char = currentLine[column];
@@ -113,7 +121,7 @@ export function parenToken(line: number, column: number, currentLine: string): r
                 type: "parenthesis",
                 value: char,
                 line: line + 1,
-                column: column + 1
+                column: column + 1,
         };
 
         return [column, token];
@@ -126,7 +134,7 @@ export function keysToken(line: number, column: number, currentLine: string): re
                 type: "keys",
                 value: char,
                 line: line + 1,
-                column: column + 1
+                column: column + 1,
         };
 
         return [column, token];
@@ -139,7 +147,7 @@ export function operatorToken(line: number, column: number, currentLine: string)
                 type: "operator",
                 value: char,
                 line: line + 1,
-                column: column + 1
+                column: column + 1,
         };
 
         return [column, token];
@@ -152,7 +160,7 @@ export function bracketToken(line: number, column: number, currentLine: string):
                 type: "bracket",
                 value: char,
                 line: line + 1,
-                column: column + 1
+                column: column + 1,
         };
 
         return [column, token];

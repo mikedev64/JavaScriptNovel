@@ -1,7 +1,25 @@
 // Constants
-import { BRACKET_REGEX, DOUBLE_QUOTE_REGEX, KEYS_REGEX, NUMBER_REGEX, OPERATOR_REGEX, PARENTHESIS_REGEX, SINGLE_QUOTE_REGEX, SPACE_REGEX, TEXT_REGEX } from "../../../constants/index.js";
+import {
+        BRACKET_REGEX,
+        DOUBLE_QUOTE_REGEX,
+        KEYS_REGEX,
+        NUMBER_REGEX,
+        OPERATOR_REGEX,
+        PARENTHESIS_REGEX,
+        SINGLE_QUOTE_REGEX,
+        SPACE_REGEX,
+        TEXT_REGEX,
+} from "./constants/index.js";
 // Functions
-import { bracketToken, keysToken, numberToken, operatorToken, parenToken, quoteToken, textToken } from "./identifier.js";
+import {
+        bracketToken,
+        keysToken,
+        numberToken,
+        operatorToken,
+        parenToken,
+        quoteToken,
+        textToken,
+} from "./identifier.js";
 // Types
 import type { IToken, TTokenType } from "../../../types/token";
 

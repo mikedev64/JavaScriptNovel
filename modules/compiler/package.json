@@ -4,6 +4,9 @@
   "description": "hola",
   "main": "./dist/src/typescript/index.js",
   "type": "module",
+  "bin": {
+    "jvnc": "./dist/bin.js"
+  },
   "scripts": {
     "dev": "tsc && node .",
     "test": "vitest",

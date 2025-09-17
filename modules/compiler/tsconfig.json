@@ -23,8 +23,8 @@
     /* ### SOURCE MAPS ### */
     "sourceMap": true,                                // Debugging en navegador
   },
-  "include": ["src", "constants", "utils", "types"],  // Lo que quieres compilar
-  "exclude": ["node_modules", "dist", "test", "server"],         // Carpetas ignoradas
+  "include": ["src", "src/typescript/tokenizer/constants", "utils", "types", "bin"],  // Lo que quieres compilar
+  "exclude": ["node_modules", "dist", "server"],         // Carpetas ignoradas
   "ts-node": {
     "esm": true,
     "experimentalSpecifierResolution": "node"

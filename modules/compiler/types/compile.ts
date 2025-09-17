@@ -1,3 +1,6 @@
+import type { IParser, TParserType } from "./parser";
+import type { IToken, TTokenType } from "./token";
+
 export interface IStart {
         type: "Program";
         body: IInstruction<TInstructionType>[];
@@ -14,20 +17,26 @@ export interface IInstruction<T extends TInstructionType> {
         metadata: {
                 file: string;
                 path: string;
-        }
+        };
 }
 
-type TInstructionDirectives<T extends TInstructionType> =
-        T extends "variable" ? ("string" | "number" | "boolean") :
-        T extends "audio" ? "audio" :
-        T extends "video" ? "video" :
-        T extends "image" ? "image" :
-        null;
+type TInstructionDirectives<T extends TInstructionType> = T extends "variable"
+        ? "string" | "number" | "boolean"
+        : T extends "audio"
+          ? "audio"
+          : T extends "video"
+            ? "video"
+            : T extends "image"
+              ? "image"
+              : T extends "character"
+                ? "character"
+                : null;
 
-type TInstructionModificator<T extends TInstructionType> =
-        T extends "play" ? "loop" :
-        T extends "scene" ? ("fade" | "start") :
-        null;
+type TInstructionModificator<T extends TInstructionType> = T extends "play"
+        ? "loop"
+        : T extends "scene"
+          ? "fade" | "start"
+          : null;
 
 type TInstructionType =
         | "volume"
@@ -40,8 +49,29 @@ type TInstructionType =
         | "audio"
         | "video"
         | "image"
+        | "character"
         | "dialogue"
         | "scene"
         | "background"
         | "draw"
-        | "undraw"
+        | "undraw";
+
+/**
+ * Tokenizer Structures
+ */
+export interface TokenDetails {
+        tokens: IToken<TTokenType>[];
+        metadata: {
+                path: string;
+        };
+}
+
+/**
+ * Parser Structures
+ */
+export interface ParserDetails {
+        parser: IParser<TParserType>[];
+        metadata: {
+                file: string;
+        };
+}
