@@ -6,18 +6,14 @@
 		"core:test": "npm run test -w modules/core",
 		"core:server:test": "npm run server:test -w modules/core",
 		"core:build": "npm run build -w modules/core",
-
 		"compiler:dev": "npm run dev -w modules/compiler",
 		"compiler:start": "npm run start -w modules/compiler",
 		"compiler:test": "npm run test -w modules/compiler",
 		"compiler:build": "npm run build -w modules/compiler",
-
 		"docs:dev": "npm run dev -w modules/documentation",
 		"docs:build": "npm run build -w modules/documentation",
-
 		"lint": "eslint . --ext .ts,.js,.json",
 		"lint:fix": "eslint . --ext .ts,.js,.json --fix",
-    
 		"format": "prettier --write .",
 		"format:check": "prettier --check ."
 	},

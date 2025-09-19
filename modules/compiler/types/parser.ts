@@ -20,21 +20,6 @@ export interface IParser<T extends TParserType> {
         body: TParserBody<T>;
 }
 
-export type TParserParams<T extends TParserType> = T extends "CallExpression" | "SceneDeclaration"
-        ? IParser<
-                  Exclude<
-                          TParserType,
-                          | "SceneDeclaration"
-                          | "Program"
-                          | "VariableDeclaration"
-                          | "ImageDeclaration"
-                          | "AudioDeclaration"
-                          | "DialogueDeclaration"
-                          | "CharacterDeclaration"
-                  >
-          >[]
-        : null;
+export type TParserParams<T extends TParserType> = T extends "CallExpression" | "SceneDeclaration" ? IParser<TParserType>[] : null;
 
-export type TParserBody<T extends TParserType> = T extends "SceneDeclaration"
-        ? IParser<TParserType>[]
-        : null;
+export type TParserBody<T extends TParserType> = T extends "SceneDeclaration" ? IParser<TParserType>[] : null;

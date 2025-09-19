@@ -43,7 +43,7 @@ export default [
 			"semi": ["error", "always"],
 			"quotes": ["error", "double"],
 			"indent": ["error", 8, { "SwitchCase": 1 }],
-			"max-len": ["warn", { "code": 100, "tabWidth": 8 }],
+			"max-len": ["warn", { "code": 150, "tabWidth": 8 }],
 			"comma-dangle": ["error", "always-multiline"],
 			"no-trailing-spaces": "error",
 			"eol-last": "error",

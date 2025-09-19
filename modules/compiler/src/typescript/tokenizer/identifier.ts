@@ -1,12 +1,5 @@
-import {
-        FLOAT_POINT_REGEX,
-        KEYWORDS,
-        NUMBER_REGEX,
-        SINGLE_QUOTE_REGEX,
-        TEXT_REGEX_FULL,
-} from "./constants/index.js";
+import { KEYWORDS, NUMBER_REGEX, SINGLE_QUOTE_REGEX, TEXT_REGEX_FULL } from "./constants/index.js";
 import { IToken, returnToken } from "../../../types/token";
-import JVNCompilerError from "../error/index.js";
 
 export function textToken(line: number, column: number, currentLine: string): returnToken {
         const token: IToken<"text" | "keyword"> = {
@@ -52,24 +45,7 @@ export function numberToken(line: number, column: number, currentLine: string): 
         while (iteration < currentLine.length) {
                 const char = currentLine[iteration];
 
-                if (FLOAT_POINT_REGEX.test(char)) {
-                        if (valueStr.includes(".")) {
-                                throw new JVNCompilerError(
-                                        `Unexpected float point at line ${line + 1}, column ${iteration + 1}`,
-                                );
-                        }
-
-                        if (valueStr === "") {
-                                break;
-                        }
-
-                        token.type = "float";
-                        valueStr += char;
-                        iteration++;
-                        continue;
-                }
-
-                if (NUMBER_REGEX.test(char)) {
+                if (NUMBER_REGEX.exec(char) !== null) {
                         valueStr += char;
                         iteration++;
                         continue;
@@ -77,21 +53,8 @@ export function numberToken(line: number, column: number, currentLine: string): 
                         break;
                 }
         }
-        if (valueStr !== "") {
-                if (token.type === "float") {
-                        const value = parseFloat(valueStr);
-                        if (!isNaN(value)) {
-                                token.value = value;
-                        }
-                } else {
-                        const value = parseInt(valueStr, 10);
-                        if (!isNaN(value)) {
-                                token.value = value;
-                        }
-                }
-        } else {
-                console.log("valueStr is empty!");
-        }
+
+        token.value = parseInt(valueStr);
 
         return [iteration - column, token];
 }
@@ -158,6 +121,32 @@ export function bracketToken(line: number, column: number, currentLine: string):
 
         const token: IToken<"bracket"> = {
                 type: "bracket",
+                value: char,
+                line: line + 1,
+                column: column + 1,
+        };
+
+        return [column, token];
+}
+
+export function commaToken(line: number, column: number, currentLine: string): returnToken {
+        const char = currentLine[column];
+
+        const token: IToken<"comma"> = {
+                type: "comma",
+                value: char,
+                line: line + 1,
+                column: column + 1,
+        };
+
+        return [column, token];
+}
+
+export function dotToken(line: number, column: number, currentLine: string): returnToken {
+        const char = currentLine[column];
+
+        const token: IToken<"dot"> = {
+                type: "dot",
                 value: char,
                 line: line + 1,
                 column: column + 1,

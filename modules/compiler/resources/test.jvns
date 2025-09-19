@@ -1,0 +1,16 @@
+scene("start") {
+    show background "park.jpg"
+    say "Ana" "¡Hola, bienvenido!"
+    menu {
+        "Saludar": jump greet
+        "Ignorar": jump end
+    }
+}
+
+scene greet {
+    say "Ana" "¡Qué amable!"
+}
+
+scene end {
+    say "Ana" "Adiós..."
+}

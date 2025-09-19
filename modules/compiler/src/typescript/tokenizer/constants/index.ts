@@ -1,7 +1,6 @@
 export const TEXT_REGEX = /^[a-zA-ZáéíóúÁÉÍÓÚñÑü]+$/;
 export const TEXT_REGEX_FULL = /^[a-zA-ZáéíóúÁÉÍÓÚñÑü0-9]$/;
 export const NUMBER_REGEX = /^[0-9]$/;
-export const FLOAT_POINT_REGEX = /^\.$/;
 export const BOOLEAN_REGEX = /^(true|false)$/;
 
 export const DOUBLE_QUOTE_REGEX = /^"$/;
@@ -11,6 +10,10 @@ export const BRACKET_REGEX = /^[\[\]]$/;
 export const KEYS_REGEX = /^[\{\}]$/;
 export const SPACE_REGEX = /^\s+$/;
 export const OPERATOR_REGEX = /^[\+\-\*\/\=]$/;
+export const COMMA_REGEX = /^,$/;
+export const DOT_REGEX = /^\.$/;
+export const SEMICOLON_REGEX = /^;$/;
+export const COLON_REGEX = /^:$/;
 
 export const KEYWORDS = [
         "scene",

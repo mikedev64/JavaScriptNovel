@@ -32,11 +32,7 @@ type TInstructionDirectives<T extends TInstructionType> = T extends "variable"
                 ? "character"
                 : null;
 
-type TInstructionModificator<T extends TInstructionType> = T extends "play"
-        ? "loop"
-        : T extends "scene"
-          ? "fade" | "start"
-          : null;
+type TInstructionModificator<T extends TInstructionType> = T extends "play" ? "loop" : T extends "scene" ? "fade" | "start" : null;
 
 type TInstructionType =
         | "volume"

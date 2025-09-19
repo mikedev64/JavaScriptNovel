@@ -1,6 +1,8 @@
 // Constants
 import {
         BRACKET_REGEX,
+        COMMA_REGEX,
+        DOT_REGEX,
         DOUBLE_QUOTE_REGEX,
         KEYS_REGEX,
         NUMBER_REGEX,
@@ -11,15 +13,7 @@ import {
         TEXT_REGEX,
 } from "./constants/index.js";
 // Functions
-import {
-        bracketToken,
-        keysToken,
-        numberToken,
-        operatorToken,
-        parenToken,
-        quoteToken,
-        textToken,
-} from "./identifier.js";
+import { bracketToken, commaToken, dotToken, keysToken, numberToken, operatorToken, parenToken, quoteToken, textToken } from "./identifier.js";
 // Types
 import type { IToken, TTokenType } from "../../../types/token";
 
@@ -55,10 +49,7 @@ export default function createTokenList(line: number, currentLine: string): ITok
                         continue;
                 }
 
-                if (
-                        DOUBLE_QUOTE_REGEX.exec(currentLine[column]) !== null ||
-                        SINGLE_QUOTE_REGEX.exec(currentLine[column]) !== null
-                ) {
+                if (DOUBLE_QUOTE_REGEX.exec(currentLine[column]) !== null || SINGLE_QUOTE_REGEX.exec(currentLine[column]) !== null) {
                         const [_column, token] = quoteToken(line, column, currentLine);
 
                         Tokens.push(token);
@@ -81,6 +72,20 @@ export default function createTokenList(line: number, currentLine: string): ITok
 
                 if (OPERATOR_REGEX.exec(currentLine[column]) !== null) {
                         const [_column, token] = operatorToken(line, column, currentLine);
+
+                        Tokens.push(token);
+                        continue;
+                }
+
+                if (COMMA_REGEX.exec(currentLine[column]) !== null) {
+                        const [_column, token] = commaToken(line, column, currentLine);
+
+                        Tokens.push(token);
+                        continue;
+                }
+
+                if (DOT_REGEX.exec(currentLine[column]) !== null) {
+                        const [_column, token] = dotToken(line, column, currentLine);
 
                         Tokens.push(token);
                         continue;

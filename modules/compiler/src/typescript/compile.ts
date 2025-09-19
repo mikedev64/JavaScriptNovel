@@ -10,7 +10,7 @@ import { resolve } from "node:path";
  * @param string_file The string content of the file to be tokenized.
  * @returns An array of token details for each line in the file.
  */
-export default function tokenizerFile(string_file: string, path_file: string) {
+export function tokenizerFile(string_file: string, path_file: string) {
         const lineContent = string_file.split("\n");
 
         const tokenList: TokenDetails = {
@@ -29,7 +29,7 @@ export default function tokenizerFile(string_file: string, path_file: string) {
 }
 
 /**
- * Parses a list of token details and logs them.
+ * Parses a list of token details and returns the parsed tokens.
  * @param token_list List of tokens to be parsed.
  */
 export function parserData(token_list: TokenDetails) {
@@ -37,8 +37,8 @@ export function parserData(token_list: TokenDetails) {
 
         const parsed_token = createParserToken(tokens);
 
-        console.log("Parsed Tokens:", parsed_token);
-        console.log("Metadata:", metadata);
-
-        return;
+        return {
+                parsedTokens: parsed_token,
+                metadata,
+        };
 }

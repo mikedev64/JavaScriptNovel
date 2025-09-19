@@ -1,0 +1,421 @@
+{
+  "metadata": {
+    "compiledAt": "2025-09-19T00:04:35.774Z",
+    "sourceFolder": "G:\\projects\\JavaScriptNovel\\modules\\compiler\\resources",
+    "filesProcessed": 2
+  },
+  "tokenizer": [
+    {
+      "tokens": [
+        {
+          "type": "keyword",
+          "value": "scene",
+          "line": 1,
+          "column": 1
+        },
+        {
+          "type": "text",
+          "value": "start",
+          "line": 1,
+          "column": 7
+        },
+        {
+          "type": "keys",
+          "value": "{",
+          "line": 1,
+          "column": 13
+        },
+        {
+          "type": "text",
+          "value": "show",
+          "line": 1,
+          "column": 15
+        },
+        {
+          "type": "keyword",
+          "value": "background",
+          "line": 1,
+          "column": 20
+        },
+        {
+          "type": "double_quote",
+          "value": "\"",
+          "line": 1,
+          "column": 31
+        },
+        {
+          "type": "text",
+          "value": "park",
+          "line": 1,
+          "column": 32
+        },
+        {
+          "type": "dot",
+          "value": ".",
+          "line": 1,
+          "column": 36
+        },
+        {
+          "type": "text",
+          "value": "jpg",
+          "line": 1,
+          "column": 37
+        },
+        {
+          "type": "double_quote",
+          "value": "\"",
+          "line": 1,
+          "column": 40
+        },
+        {
+          "type": "text",
+          "value": "say",
+          "line": 1,
+          "column": 42
+        },
+        {
+          "type": "double_quote",
+          "value": "\"",
+          "line": 1,
+          "column": 46
+        },
+        {
+          "type": "text",
+          "value": "Ana",
+          "line": 1,
+          "column": 47
+        },
+        {
+          "type": "double_quote",
+          "value": "\"",
+          "line": 1,
+          "column": 50
+        },
+        {
+          "type": "double_quote",
+          "value": "\"",
+          "line": 1,
+          "column": 52
+        },
+        {
+          "type": "text",
+          "value": "Hola",
+          "line": 1,
+          "column": 54
+        },
+        {
+          "type": "comma",
+          "value": ",",
+          "line": 1,
+          "column": 58
+        },
+        {
+          "type": "text",
+          "value": "bienvenido",
+          "line": 1,
+          "column": 60
+        },
+        {
+          "type": "double_quote",
+          "value": "\"",
+          "line": 1,
+          "column": 71
+        },
+        {
+          "type": "text",
+          "value": "menu",
+          "line": 1,
+          "column": 73
+        },
+        {
+          "type": "keys",
+          "value": "{",
+          "line": 1,
+          "column": 78
+        },
+        {
+          "type": "double_quote",
+          "value": "\"",
+          "line": 1,
+          "column": 80
+        },
+        {
+          "type": "text",
+          "value": "Saludar",
+          "line": 1,
+          "column": 81
+        },
+        {
+          "type": "double_quote",
+          "value": "\"",
+          "line": 1,
+          "column": 88
+        },
+        {
+          "type": "keyword",
+          "value": "jump",
+          "line": 1,
+          "column": 91
+        },
+        {
+          "type": "text",
+          "value": "greet",
+          "line": 1,
+          "column": 96
+        },
+        {
+          "type": "double_quote",
+          "value": "\"",
+          "line": 1,
+          "column": 102
+        },
+        {
+          "type": "text",
+          "value": "Ignorar",
+          "line": 1,
+          "column": 103
+        },
+        {
+          "type": "double_quote",
+          "value": "\"",
+          "line": 1,
+          "column": 110
+        },
+        {
+          "type": "keyword",
+          "value": "jump",
+          "line": 1,
+          "column": 113
+        },
+        {
+          "type": "text",
+          "value": "end",
+          "line": 1,
+          "column": 118
+        },
+        {
+          "type": "keys",
+          "value": "}",
+          "line": 1,
+          "column": 122
+        },
+        {
+          "type": "keys",
+          "value": "}",
+          "line": 1,
+          "column": 124
+        },
+        {
+          "type": "keyword",
+          "value": "scene",
+          "line": 1,
+          "column": 126
+        },
+        {
+          "type": "text",
+          "value": "greet",
+          "line": 1,
+          "column": 132
+        },
+        {
+          "type": "keys",
+          "value": "{",
+          "line": 1,
+          "column": 138
+        },
+        {
+          "type": "text",
+          "value": "say",
+          "line": 1,
+          "column": 140
+        },
+        {
+          "type": "double_quote",
+          "value": "\"",
+          "line": 1,
+          "column": 144
+        },
+        {
+          "type": "text",
+          "value": "Ana",
+          "line": 1,
+          "column": 145
+        },
+        {
+          "type": "double_quote",
+          "value": "\"",
+          "line": 1,
+          "column": 148
+        },
+        {
+          "type": "double_quote",
+          "value": "\"",
+          "line": 1,
+          "column": 150
+        },
+        {
+          "type": "text",
+          "value": "Qué",
+          "line": 1,
+          "column": 152
+        },
+        {
+          "type": "text",
+          "value": "amable",
+          "line": 1,
+          "column": 156
+        },
+        {
+          "type": "double_quote",
+          "value": "\"",
+          "line": 1,
+          "column": 163
+        },
+        {
+          "type": "keys",
+          "value": "}",
+          "line": 1,
+          "column": 165
+        },
+        {
+          "type": "keyword",
+          "value": "scene",
+          "line": 1,
+          "column": 167
+        },
+        {
+          "type": "text",
+          "value": "end",
+          "line": 1,
+          "column": 173
+        },
+        {
+          "type": "keys",
+          "value": "{",
+          "line": 1,
+          "column": 177
+        },
+        {
+          "type": "text",
+          "value": "say",
+          "line": 1,
+          "column": 179
+        },
+        {
+          "type": "double_quote",
+          "value": "\"",
+          "line": 1,
+          "column": 183
+        },
+        {
+          "type": "text",
+          "value": "Ana",
+          "line": 1,
+          "column": 184
+        },
+        {
+          "type": "double_quote",
+          "value": "\"",
+          "line": 1,
+          "column": 187
+        },
+        {
+          "type": "double_quote",
+          "value": "\"",
+          "line": 1,
+          "column": 189
+        },
+        {
+          "type": "text",
+          "value": "Adiós",
+          "line": 1,
+          "column": 190
+        },
+        {
+          "type": "dot",
+          "value": ".",
+          "line": 1,
+          "column": 195
+        },
+        {
+          "type": "dot",
+          "value": ".",
+          "line": 1,
+          "column": 196
+        },
+        {
+          "type": "dot",
+          "value": ".",
+          "line": 1,
+          "column": 197
+        },
+        {
+          "type": "double_quote",
+          "value": "\"",
+          "line": 1,
+          "column": 198
+        },
+        {
+          "type": "keys",
+          "value": "}",
+          "line": 1,
+          "column": 200
+        }
+      ],
+      "metadata": {
+        "path": "G:\\projects\\JavaScriptNovel\\modules\\compiler\\resources\\test.jvn"
+      }
+    },
+    {
+      "tokens": [
+        {
+          "type": "keyword",
+          "value": "scene",
+          "line": 1,
+          "column": 1
+        },
+        {
+          "type": "parenthesis",
+          "value": "(",
+          "line": 1,
+          "column": 6
+        },
+        {
+          "type": "parenthesis",
+          "value": ")",
+          "line": 1,
+          "column": 7
+        },
+        {
+          "type": "keys",
+          "value": "{",
+          "line": 1,
+          "column": 9
+        },
+        {
+          "type": "keys",
+          "value": "}",
+          "line": 3,
+          "column": 1
+        }
+      ],
+      "metadata": {
+        "path": "G:\\projects\\JavaScriptNovel\\modules\\compiler\\resources\\test2.jvn"
+      }
+    }
+  ],
+  "parser": [
+    {
+      "parsedTokens": [],
+      "metadata": {
+        "path": "G:\\projects\\JavaScriptNovel\\modules\\compiler\\resources\\test.jvn"
+      }
+    },
+    {
+      "parsedTokens": [],
+      "metadata": {
+        "path": "G:\\projects\\JavaScriptNovel\\modules\\compiler\\resources\\test2.jvn"
+      }
+    }
+  ]
+}

@@ -28,9 +28,15 @@ type TTokenValueType<T extends TTokenType> = T extends "text"
                       ? string
                       : T extends "bracket"
                         ? string
-                        : never;
+                        : T extends "comma"
+                          ? string
+                          : T extends "dot"
+                            ? string
+                            : never;
 
 export type TTokenType =
+        | "dot"
+        | "comma"
         | "text"
         | "number"
         | "float"

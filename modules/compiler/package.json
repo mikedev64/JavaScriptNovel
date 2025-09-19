@@ -5,7 +5,7 @@
   "main": "./dist/src/typescript/index.js",
   "type": "module",
   "bin": {
-    "jvnc": "./dist/bin.js"
+    "jvnc": "./dist/bin/bin.js"
   },
   "scripts": {
     "dev": "tsc && node .",
