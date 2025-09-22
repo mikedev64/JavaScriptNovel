@@ -68,6 +68,6 @@ export interface TokenDetails {
 export interface ParserDetails {
         parser: IParser<TParserType>[];
         metadata: {
-                file: string;
+                path: string;
         };
 }

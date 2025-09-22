@@ -1,5 +1,5 @@
 // Tokenizer
-import { TokenDetails } from "../../types/compile.js";
+import { ParserDetails, TokenDetails } from "../../types/compile.js";
 import { createParserToken } from "./parser/index.js";
 import createTokenList from "./tokenizer/index.js";
 // Types
@@ -32,13 +32,16 @@ export function tokenizerFile(string_file: string, path_file: string) {
  * Parses a list of token details and returns the parsed tokens.
  * @param token_list List of tokens to be parsed.
  */
-export function parserData(token_list: TokenDetails) {
-        const { metadata, tokens } = token_list;
+export function parserData(token_list: TokenDetails[]): ParserDetails[] {
+        const parsed_token: ParserDetails[] = [];
 
-        const parsed_token = createParserToken(tokens);
+        for (const tokens of token_list) {
+                const parser = createParserToken<true>(tokens.tokens, 0)!;
+                parsed_token.push({
+                        parser,
+                        metadata: tokens.metadata,
+                });
+        }
 
-        return {
-                parsedTokens: parsed_token,
-                metadata,
-        };
+        return parsed_token;
 }

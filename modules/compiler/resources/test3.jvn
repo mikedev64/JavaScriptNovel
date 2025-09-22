@@ -1,0 +1,12 @@
+scene("start") {
+    background("park.jpg")
+    dialogue("Ana", "¡Hola, bienvenido!")
+}
+
+scene("greet") {
+    dialogue("Ana", "¡Qué amable!")
+}
+
+scene("end") {
+    dialogue("Ana", "Adiós...")
+}

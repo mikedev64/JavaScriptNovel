@@ -19,12 +19,9 @@ export default async function novelScriptCompiler(script_url: string) {
                 tokenizer_compile.push(tokenList);
         }
 
-        const parser_compile: unknown[] = [];
+        const parsedResult = parserData(tokenizer_compile);
 
-        for (const tokens of tokenizer_compile) {
-                const parsedResult = parserData(tokens);
-                parser_compile.push(parsedResult);
-        }
+        console.log(JSON.stringify(parsedResult, null, 2));
 
         // Retornar los resultados compilados
         return {
@@ -34,8 +31,8 @@ export default async function novelScriptCompiler(script_url: string) {
                         filesProcessed: tokenizer_compile.length,
                 },
                 tokenizer: tokenizer_compile,
-                parser: parser_compile,
+                parser: parsedResult,
         };
 }
-
+// Ejecución
 await novelScriptCompiler("./resources/");

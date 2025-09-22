@@ -2,14 +2,14 @@ import { createParserToken } from "./index.js";
 import type { IParser, TParserType } from "../../../types/parser";
 import type { IToken, TTokenType } from "../../../types/token";
 import JVNCompilerError from "../error/index.js";
-import { VALUE_SPECIAL_PAREN_CLOSE, VALUE_SPECIAL_PAREN_OPEN } from "./constants/index.js";
+import { VALUE_SPECIAL_KEY_CLOSE, VALUE_SPECIAL_KEY_OPEN, VALUE_SPECIAL_PAREN_CLOSE, VALUE_SPECIAL_PAREN_OPEN } from "./constants/index.js";
 
 type TReturnType = [IParser<TParserType>, number];
 
 export function stringTypeDeclaration(token: IToken<TTokenType>, tokenz_list: IToken<TTokenType>[], counter: number): TReturnType {
         const condition = token.type === "double_quote" ? "double_quote" : "single_quote";
 
-        const node: IParser<TParserType> = {
+        const node: IParser<"StringLiteral"> = {
                 type: "StringLiteral",
                 value: "",
                 params: null,
@@ -37,7 +37,7 @@ export function stringTypeDeclaration(token: IToken<TTokenType>, tokenz_list: IT
  * @returns parsed variable declaration
  */
 export function variableTypeDeclaration(token: IToken<TTokenType>, counter: number): TReturnType {
-        const node: IParser<TParserType> = {
+        const node: IParser<"VariableDeclaration" | "AudioDeclaration" | "VideoDeclaration" | "ImageDeclaration" | "CharacterDeclaration"> = {
                 type: "VariableDeclaration",
                 value: token.value,
                 params: null,
@@ -60,27 +60,67 @@ export function variableTypeDeclaration(token: IToken<TTokenType>, counter: numb
  * @returns parsed function declaration
  */
 export function functionTypeDeclaration(token: IToken<TTokenType>, tokens: IToken<TTokenType>[], counter: number): TReturnType {
-        const node: IParser<TParserType> = {
+        const node: IParser<"CallExpression"> = {
                 type: "CallExpression",
                 value: token.value,
                 params: [],
                 body: null,
         };
 
-        const internal_token = tokens[++counter];
+        let current_token = tokens[++counter];
 
-        if (internal_token.value !== VALUE_SPECIAL_PAREN_OPEN)
-                throw new JVNCompilerError(`Expected '(', but got '${internal_token.value}'`, internal_token.line, internal_token.column);
+        if (current_token.value !== VALUE_SPECIAL_PAREN_OPEN)
+                throw new JVNCompilerError(`Expected '(', but got '${current_token.value}'`, current_token.line, current_token.column);
+
+        current_token = tokens[++counter];
+
+        while (current_token.type !== "parenthesis" || current_token.value !== VALUE_SPECIAL_PAREN_CLOSE) {
+                const [return_node, new_counter] = createParserToken(tokens, counter, false)!;
+
+                node.params!.push(return_node);
+                counter = new_counter;
+                current_token = tokens[++counter];
+        }
+
+        return [node, counter];
+}
+
+export function functionSceneTypeDeclaration(token: IToken<TTokenType>, tokens: IToken<TTokenType>[], counter: number): TReturnType {
+        const node: IParser<"SceneDeclaration"> = {
+                type: "SceneDeclaration",
+                value: "",
+                params: [],
+                body: [],
+        };
 
         let current_token = tokens[++counter];
 
-        while (current_token.type !== "parenthesis" || current_token.value !== VALUE_SPECIAL_PAREN_CLOSE) {
-                current_token = tokens[++counter];
+        if (current_token.value !== VALUE_SPECIAL_PAREN_OPEN)
+                throw new JVNCompilerError(`Expected '(', but got '${current_token.value}'`, current_token.line, current_token.column);
 
-                if (current_token.type !== "parenthesis" && current_token.value !== VALUE_SPECIAL_PAREN_OPEN) {
-                        const return_node = createParserToken([current_token], counter) as IParser<TParserType>;
-                        node.params!.push(return_node);
-                }
+        current_token = tokens[++counter];
+
+        while (current_token.type !== "parenthesis" || current_token.value !== VALUE_SPECIAL_PAREN_CLOSE) {
+                const [return_node, new_counter] = createParserToken(tokens, counter, false)!;
+
+                node.params.push(return_node);
+                counter = new_counter;
+                current_token = tokens[++counter];
+        }
+
+        current_token = tokens[++counter];
+
+        if (current_token.value !== VALUE_SPECIAL_KEY_OPEN)
+                throw new JVNCompilerError(`Expected '{', but got '${current_token.value}'`, current_token.line, current_token.column);
+
+        current_token = tokens[++counter];
+
+        while (current_token.type !== "keys" || current_token.value !== VALUE_SPECIAL_KEY_CLOSE) {
+                const [return_node, new_counter] = createParserToken(tokens, counter, false);
+
+                node.body.push(return_node);
+                counter = new_counter;
+                current_token = tokens[++counter];
         }
 
         return [node, counter];
