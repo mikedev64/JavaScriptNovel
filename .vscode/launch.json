@@ -5,7 +5,7 @@
             "name": "Debug Compiler",
             "type": "node",
             "request": "launch",
-            "program": "${workspaceFolder}/modules/compiler/dist/src/typescript/index.js",
+            "program": "${workspaceFolder}/modules/compiler/dist/src/typescript.init.js",
             "cwd": "${workspaceFolder}/modules/compiler",
             "sourceMaps": true,
             "console": "integratedTerminal",

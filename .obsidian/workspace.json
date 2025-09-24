@@ -189,17 +189,17 @@
       "command-palette:Abrir paleta de comandos": false
     }
   },
-  "active": "8d794fb949b77332",
+  "active": "2c02fad6ad1f0b9e",
   "lastOpenFiles": [
+    "Pricing.md",
+    "modules/compiler/README.md",
     "modules/compiler/src/typescript/memory/index.ts",
     "modules/compiler/src/typescript/memory",
     "modules/compiler/dist/types/parser.js",
     "modules/compiler/dist/types/parser.js.map",
     "README.md",
-    "modules/compiler/README.md",
     "modules/compiler/Sin título.base",
     "XD.md",
-    "Sin título.md",
     "Sin nombre",
     "Sin nombre 1",
     "LICENSE",

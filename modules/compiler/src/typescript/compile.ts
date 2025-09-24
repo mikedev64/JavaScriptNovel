@@ -36,9 +36,9 @@ export function parserData(token_list: TokenDetails[]): ParserDetails[] {
         const parsed_token: ParserDetails[] = [];
 
         for (const tokens of token_list) {
-                const parser = createParserToken<true>(tokens.tokens, 0)!;
+                const keys = createParserToken<true>(tokens.tokens, 0)!;
                 parsed_token.push({
-                        parser,
+                        keys,
                         metadata: tokens.metadata,
                 });
         }

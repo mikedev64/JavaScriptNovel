@@ -1,10 +1,65 @@
 {
   "metadata": {
-    "compiledAt": "2025-09-22T20:48:45.907Z",
+    "compiledAt": "2025-09-24T20:00:11.402Z",
     "sourceFolder": "G:\\projects\\JavaScriptNovel\\modules\\compiler\\resources",
     "filesProcessed": 2
   },
   "tokenizer": [
+    {
+      "tokens": [
+        {
+          "type": "double_quote",
+          "value": "\"",
+          "line": 1,
+          "column": 1
+        },
+        {
+          "type": "text",
+          "value": "Hola",
+          "line": 1,
+          "column": 2
+        },
+        {
+          "type": "text",
+          "value": "XD",
+          "line": 1,
+          "column": 7
+        },
+        {
+          "type": "double_quote",
+          "value": "\"",
+          "line": 1,
+          "column": 9
+        },
+        {
+          "type": "double_quote",
+          "value": "\"",
+          "line": 2,
+          "column": 1
+        },
+        {
+          "type": "text",
+          "value": "Audio",
+          "line": 2,
+          "column": 2
+        },
+        {
+          "type": "keyword",
+          "value": "scene",
+          "line": 2,
+          "column": 8
+        },
+        {
+          "type": "double_quote",
+          "value": "\"",
+          "line": 2,
+          "column": 13
+        }
+      ],
+      "metadata": {
+        "path": "G:\\projects\\JavaScriptNovel\\modules\\compiler\\resources\\test2.js.vn"
+      }
+    },
     {
       "tokens": [
         {
@@ -417,68 +472,32 @@
         }
       ],
       "metadata": {
-        "path": "G:\\projects\\JavaScriptNovel\\modules\\compiler\\resources\\test.jvn"
-      }
-    },
-    {
-      "tokens": [
-        {
-          "type": "double_quote",
-          "value": "\"",
-          "line": 1,
-          "column": 1
-        },
-        {
-          "type": "text",
-          "value": "Hola",
-          "line": 1,
-          "column": 2
-        },
-        {
-          "type": "text",
-          "value": "XD",
-          "line": 1,
-          "column": 7
-        },
-        {
-          "type": "double_quote",
-          "value": "\"",
-          "line": 1,
-          "column": 9
-        },
-        {
-          "type": "double_quote",
-          "value": "\"",
-          "line": 2,
-          "column": 1
-        },
-        {
-          "type": "text",
-          "value": "Audio",
-          "line": 2,
-          "column": 2
-        },
-        {
-          "type": "keyword",
-          "value": "scene",
-          "line": 2,
-          "column": 8
-        },
-        {
-          "type": "double_quote",
-          "value": "\"",
-          "line": 2,
-          "column": 13
-        }
-      ],
-      "metadata": {
-        "path": "G:\\projects\\JavaScriptNovel\\modules\\compiler\\resources\\test2.jvn"
+        "path": "G:\\projects\\JavaScriptNovel\\modules\\compiler\\resources\\test3.js.vn"
       }
     }
   ],
   "parser": [
     {
-      "parser": [
+      "keys": [
+        {
+          "type": "StringLiteral",
+          "value": "Hola XD",
+          "params": null,
+          "body": null
+        },
+        {
+          "type": "StringLiteral",
+          "value": "Audio scene",
+          "params": null,
+          "body": null
+        }
+      ],
+      "metadata": {
+        "path": "G:\\projects\\JavaScriptNovel\\modules\\compiler\\resources\\test2.js.vn"
+      }
+    },
+    {
+      "keys": [
         {
           "type": "SceneDeclaration",
           "value": "",
@@ -593,26 +612,7 @@
         }
       ],
       "metadata": {
-        "path": "G:\\projects\\JavaScriptNovel\\modules\\compiler\\resources\\test.jvn"
-      }
-    },
-    {
-      "parser": [
-        {
-          "type": "StringLiteral",
-          "value": "Hola XD",
-          "params": null,
-          "body": null
-        },
-        {
-          "type": "StringLiteral",
-          "value": "Audio scene",
-          "params": null,
-          "body": null
-        }
-      ],
-      "metadata": {
-        "path": "G:\\projects\\JavaScriptNovel\\modules\\compiler\\resources\\test2.jvn"
+        "path": "G:\\projects\\JavaScriptNovel\\modules\\compiler\\resources\\test3.js.vn"
       }
     }
   ]

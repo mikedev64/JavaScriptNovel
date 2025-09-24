@@ -7,7 +7,7 @@ import { resolve } from "node:path";
 import { TokenDetails } from "../../types/compile.js";
 
 export default async function novelScriptCompiler(script_url: string) {
-        const novelscript_filelocations = glob(`${script_url}/**/*.jvn`);
+        const novelscript_filelocations = glob(`${script_url}/**/*.js.vn`);
 
         const tokenizer_compile: TokenDetails[] = [];
 
@@ -21,8 +21,6 @@ export default async function novelScriptCompiler(script_url: string) {
 
         const parsedResult = parserData(tokenizer_compile);
 
-        console.log(JSON.stringify(parsedResult, null, 2));
-
         // Retornar los resultados compilados
         return {
                 metadata: {
@@ -34,5 +32,3 @@ export default async function novelScriptCompiler(script_url: string) {
                 parser: parsedResult,
         };
 }
-// Ejecución
-await novelScriptCompiler("./resources/");

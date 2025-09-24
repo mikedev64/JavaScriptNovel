@@ -66,7 +66,7 @@ export interface TokenDetails {
  * Parser Structures
  */
 export interface ParserDetails {
-        parser: IParser<TParserType>[];
+        keys: IParser<TParserType>[];
         metadata: {
                 path: string;
         };
