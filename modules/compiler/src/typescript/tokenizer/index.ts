@@ -13,7 +13,7 @@ import {
         TEXT_REGEX,
 } from "./constants/index.js";
 // Functions
-import { bracketToken, commaToken, dotToken, keysToken, numberToken, operatorToken, parenToken, quoteToken, textToken } from "./identifier.js";
+import { bracketToken, commaToken, dotToken, keysToken, numberToken, operatorToken, parenToken, textToken, specialToken } from "./identifier.js";
 // Types
 import type { IToken, TTokenType } from "../../../types/token";
 
@@ -26,15 +26,17 @@ export default function createTokenList(line: number, currentLine: string): ITok
         const Tokens: IToken<TTokenType>[] = [];
 
         for (let column = 0; column < currentLine.length; column++) {
-                if (TEXT_REGEX.exec(currentLine[column]) !== null) {
-                        const [_column, token] = textToken(line, column, currentLine);
+                const actual_char = currentLine[column];
+
+                if (TEXT_REGEX.exec(actual_char) !== null) {
+                        const [_column, token] = specialToken(line, column, currentLine);
                         column += _column - 1;
 
                         Tokens.push(token);
                         continue;
                 }
 
-                if (NUMBER_REGEX.exec(currentLine[column]) !== null) {
+                if (NUMBER_REGEX.exec(actual_char) !== null) {
                         const [_column, token] = numberToken(line, column, currentLine);
                         column += _column - 1;
 
@@ -42,56 +44,58 @@ export default function createTokenList(line: number, currentLine: string): ITok
                         continue;
                 }
 
-                if (KEYS_REGEX.exec(currentLine[column]) !== null) {
+                if (KEYS_REGEX.exec(actual_char) !== null) {
                         const [_column, token] = keysToken(line, column, currentLine);
 
                         Tokens.push(token);
                         continue;
                 }
 
-                if (DOUBLE_QUOTE_REGEX.exec(currentLine[column]) !== null || SINGLE_QUOTE_REGEX.exec(currentLine[column]) !== null) {
-                        const [_column, token] = quoteToken(line, column, currentLine);
+                if (DOUBLE_QUOTE_REGEX.exec(actual_char) !== null || SINGLE_QUOTE_REGEX.exec(currentLine[column]) !== null) {
+                        const [_column, token] = textToken(line, column, currentLine);
 
+                        const _test = currentLine[_column];
+                        column += _column;
                         Tokens.push(token);
                         continue;
                 }
 
-                if (PARENTHESIS_REGEX.exec(currentLine[column]) !== null) {
+                if (PARENTHESIS_REGEX.exec(actual_char) !== null) {
                         const [_column, token] = parenToken(line, column, currentLine);
 
                         Tokens.push(token);
                         continue;
                 }
 
-                if (BRACKET_REGEX.exec(currentLine[column]) !== null) {
+                if (BRACKET_REGEX.exec(actual_char) !== null) {
                         const [_column, token] = bracketToken(line, column, currentLine);
 
                         Tokens.push(token);
                         continue;
                 }
 
-                if (OPERATOR_REGEX.exec(currentLine[column]) !== null) {
+                if (OPERATOR_REGEX.exec(actual_char) !== null) {
                         const [_column, token] = operatorToken(line, column, currentLine);
 
                         Tokens.push(token);
                         continue;
                 }
 
-                if (COMMA_REGEX.exec(currentLine[column]) !== null) {
+                if (COMMA_REGEX.exec(actual_char) !== null) {
                         const [_column, token] = commaToken(line, column, currentLine);
 
                         Tokens.push(token);
                         continue;
                 }
 
-                if (DOT_REGEX.exec(currentLine[column]) !== null) {
+                if (DOT_REGEX.exec(actual_char) !== null) {
                         const [_column, token] = dotToken(line, column, currentLine);
 
                         Tokens.push(token);
                         continue;
                 }
 
-                if (SPACE_REGEX.exec(currentLine[column]) !== null) {
+                if (SPACE_REGEX.exec(actual_char) !== null) {
                         continue;
                 }
         }

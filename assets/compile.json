@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "compiledAt": "2025-09-24T20:00:11.402Z",
+    "compiledAt": "2025-09-26T23:52:00.717Z",
     "sourceFolder": "G:\\projects\\JavaScriptNovel\\modules\\compiler\\resources",
     "filesProcessed": 2
   },
@@ -8,52 +8,10 @@
     {
       "tokens": [
         {
-          "type": "double_quote",
-          "value": "\"",
+          "type": "float",
+          "value": 5.4,
           "line": 1,
           "column": 1
-        },
-        {
-          "type": "text",
-          "value": "Hola",
-          "line": 1,
-          "column": 2
-        },
-        {
-          "type": "text",
-          "value": "XD",
-          "line": 1,
-          "column": 7
-        },
-        {
-          "type": "double_quote",
-          "value": "\"",
-          "line": 1,
-          "column": 9
-        },
-        {
-          "type": "double_quote",
-          "value": "\"",
-          "line": 2,
-          "column": 1
-        },
-        {
-          "type": "text",
-          "value": "Audio",
-          "line": 2,
-          "column": 2
-        },
-        {
-          "type": "keyword",
-          "value": "scene",
-          "line": 2,
-          "column": 8
-        },
-        {
-          "type": "double_quote",
-          "value": "\"",
-          "line": 2,
-          "column": 13
         }
       ],
       "metadata": {
@@ -64,31 +22,25 @@
       "tokens": [
         {
           "type": "keyword",
-          "value": "scene",
+          "value": "start",
           "line": 1,
           "column": 1
+        },
+        {
+          "type": "keyword",
+          "value": "scene",
+          "line": 1,
+          "column": 7
         },
         {
           "type": "parenthesis",
           "value": "(",
           "line": 1,
-          "column": 6
+          "column": 12
         },
         {
-          "type": "double_quote",
-          "value": "\"",
-          "line": 1,
-          "column": 7
-        },
-        {
-          "type": "text",
-          "value": "start",
-          "line": 1,
-          "column": 8
-        },
-        {
-          "type": "double_quote",
-          "value": "\"",
+          "type": "string",
+          "value": "start hola",
           "line": 1,
           "column": 13
         },
@@ -96,61 +48,43 @@
           "type": "parenthesis",
           "value": ")",
           "line": 1,
-          "column": 14
+          "column": 25
         },
         {
           "type": "keys",
           "value": "{",
           "line": 1,
-          "column": 16
+          "column": 27
+        },
+        {
+          "type": "keyword",
+          "value": "loop",
+          "line": 2,
+          "column": 5
         },
         {
           "type": "keyword",
           "value": "background",
           "line": 2,
-          "column": 5
+          "column": 10
         },
         {
           "type": "parenthesis",
           "value": "(",
           "line": 2,
-          "column": 15
+          "column": 20
         },
         {
-          "type": "double_quote",
-          "value": "\"",
-          "line": 2,
-          "column": 16
-        },
-        {
-          "type": "text",
-          "value": "park",
-          "line": 2,
-          "column": 17
-        },
-        {
-          "type": "dot",
-          "value": ".",
+          "type": "string",
+          "value": "park.jpg",
           "line": 2,
           "column": 21
-        },
-        {
-          "type": "text",
-          "value": "jpg",
-          "line": 2,
-          "column": 22
-        },
-        {
-          "type": "double_quote",
-          "value": "\"",
-          "line": 2,
-          "column": 25
         },
         {
           "type": "parenthesis",
           "value": ")",
           "line": 2,
-          "column": 26
+          "column": 31
         },
         {
           "type": "keyword",
@@ -165,22 +99,10 @@
           "column": 13
         },
         {
-          "type": "double_quote",
-          "value": "\"",
-          "line": 3,
-          "column": 14
-        },
-        {
-          "type": "text",
+          "type": "string",
           "value": "Ana",
           "line": 3,
-          "column": 15
-        },
-        {
-          "type": "double_quote",
-          "value": "\"",
-          "line": 3,
-          "column": 18
+          "column": 14
         },
         {
           "type": "comma",
@@ -189,34 +111,10 @@
           "column": 19
         },
         {
-          "type": "double_quote",
-          "value": "\"",
+          "type": "string",
+          "value": "¡Hola, bienvenido!",
           "line": 3,
           "column": 21
-        },
-        {
-          "type": "text",
-          "value": "Hola",
-          "line": 3,
-          "column": 23
-        },
-        {
-          "type": "comma",
-          "value": ",",
-          "line": 3,
-          "column": 27
-        },
-        {
-          "type": "text",
-          "value": "bienvenido",
-          "line": 3,
-          "column": 29
-        },
-        {
-          "type": "double_quote",
-          "value": "\"",
-          "line": 3,
-          "column": 40
         },
         {
           "type": "parenthesis",
@@ -243,22 +141,10 @@
           "column": 6
         },
         {
-          "type": "double_quote",
-          "value": "\"",
-          "line": 6,
-          "column": 7
-        },
-        {
-          "type": "text",
+          "type": "string",
           "value": "greet",
           "line": 6,
-          "column": 8
-        },
-        {
-          "type": "double_quote",
-          "value": "\"",
-          "line": 6,
-          "column": 13
+          "column": 7
         },
         {
           "type": "parenthesis",
@@ -285,22 +171,10 @@
           "column": 13
         },
         {
-          "type": "double_quote",
-          "value": "\"",
-          "line": 7,
-          "column": 14
-        },
-        {
-          "type": "text",
+          "type": "string",
           "value": "Ana",
           "line": 7,
-          "column": 15
-        },
-        {
-          "type": "double_quote",
-          "value": "\"",
-          "line": 7,
-          "column": 18
+          "column": 14
         },
         {
           "type": "comma",
@@ -309,28 +183,10 @@
           "column": 19
         },
         {
-          "type": "double_quote",
-          "value": "\"",
+          "type": "string",
+          "value": "¡Qué amable!",
           "line": 7,
           "column": 21
-        },
-        {
-          "type": "text",
-          "value": "Qué",
-          "line": 7,
-          "column": 23
-        },
-        {
-          "type": "text",
-          "value": "amable",
-          "line": 7,
-          "column": 27
-        },
-        {
-          "type": "double_quote",
-          "value": "\"",
-          "line": 7,
-          "column": 34
         },
         {
           "type": "parenthesis",
@@ -357,22 +213,10 @@
           "column": 6
         },
         {
-          "type": "double_quote",
-          "value": "\"",
-          "line": 10,
-          "column": 7
-        },
-        {
-          "type": "text",
+          "type": "string",
           "value": "end",
           "line": 10,
-          "column": 8
-        },
-        {
-          "type": "double_quote",
-          "value": "\"",
-          "line": 10,
-          "column": 11
+          "column": 7
         },
         {
           "type": "parenthesis",
@@ -399,22 +243,10 @@
           "column": 13
         },
         {
-          "type": "double_quote",
-          "value": "\"",
-          "line": 11,
-          "column": 14
-        },
-        {
-          "type": "text",
+          "type": "string",
           "value": "Ana",
           "line": 11,
-          "column": 15
-        },
-        {
-          "type": "double_quote",
-          "value": "\"",
-          "line": 11,
-          "column": 18
+          "column": 14
         },
         {
           "type": "comma",
@@ -423,40 +255,10 @@
           "column": 19
         },
         {
-          "type": "double_quote",
-          "value": "\"",
+          "type": "string",
+          "value": "Adiós...",
           "line": 11,
           "column": 21
-        },
-        {
-          "type": "text",
-          "value": "Adiós",
-          "line": 11,
-          "column": 22
-        },
-        {
-          "type": "dot",
-          "value": ".",
-          "line": 11,
-          "column": 27
-        },
-        {
-          "type": "dot",
-          "value": ".",
-          "line": 11,
-          "column": 28
-        },
-        {
-          "type": "dot",
-          "value": ".",
-          "line": 11,
-          "column": 29
-        },
-        {
-          "type": "double_quote",
-          "value": "\"",
-          "line": 11,
-          "column": 30
         },
         {
           "type": "parenthesis",
@@ -480,16 +282,8 @@
     {
       "keys": [
         {
-          "type": "StringLiteral",
-          "value": "Hola XD",
-          "params": null,
-          "body": null
-        },
-        {
-          "type": "StringLiteral",
-          "value": "Audio scene",
-          "params": null,
-          "body": null
+          "type": "FloatLiteral",
+          "value": 5.4
         }
       ],
       "metadata": {
@@ -501,114 +295,104 @@
         {
           "type": "SceneDeclaration",
           "value": "",
+          "name": "",
           "params": [
             {
               "type": "StringLiteral",
-              "value": "start",
-              "params": null,
-              "body": null
+              "value": "start hola"
             }
           ],
           "body": [
             {
               "type": "CallExpression",
-              "value": "background",
+              "value": "",
+              "name": "background",
               "params": [
                 {
                   "type": "StringLiteral",
-                  "value": "park . jpg",
-                  "params": null,
-                  "body": null
+                  "value": "park.jpg"
                 }
               ],
-              "body": null
+              "modificators": "loop"
             },
             {
               "type": "CallExpression",
-              "value": "dialogue",
+              "value": "",
+              "name": "dialogue",
               "params": [
                 {
                   "type": "StringLiteral",
-                  "value": "Ana",
-                  "params": null,
-                  "body": null
+                  "value": "Ana"
                 },
                 {
                   "type": "StringLiteral",
-                  "value": "Hola , bienvenido",
-                  "params": null,
-                  "body": null
+                  "value": "¡Hola, bienvenido!"
                 }
               ],
-              "body": null
+              "modificators": ""
             }
-          ]
+          ],
+          "modificators": "start"
         },
         {
           "type": "SceneDeclaration",
           "value": "",
+          "name": "",
           "params": [
             {
               "type": "StringLiteral",
-              "value": "greet",
-              "params": null,
-              "body": null
+              "value": "greet"
             }
           ],
           "body": [
             {
               "type": "CallExpression",
-              "value": "dialogue",
+              "value": "",
+              "name": "dialogue",
               "params": [
                 {
                   "type": "StringLiteral",
-                  "value": "Ana",
-                  "params": null,
-                  "body": null
+                  "value": "Ana"
                 },
                 {
                   "type": "StringLiteral",
-                  "value": "Qué amable",
-                  "params": null,
-                  "body": null
+                  "value": "¡Qué amable!"
                 }
               ],
-              "body": null
+              "modificators": ""
             }
-          ]
+          ],
+          "modificators": ""
         },
         {
           "type": "SceneDeclaration",
           "value": "",
+          "name": "",
           "params": [
             {
               "type": "StringLiteral",
-              "value": "end",
-              "params": null,
-              "body": null
+              "value": "end"
             }
           ],
           "body": [
             {
               "type": "CallExpression",
-              "value": "dialogue",
+              "value": "",
+              "name": "dialogue",
               "params": [
                 {
                   "type": "StringLiteral",
-                  "value": "Ana",
-                  "params": null,
-                  "body": null
+                  "value": "Ana"
                 },
                 {
                   "type": "StringLiteral",
-                  "value": "Adiós . . .",
-                  "params": null,
-                  "body": null
+                  "value": "Adiós..."
                 }
               ],
-              "body": null
+              "modificators": ""
             }
-          ]
+          ],
+          "modificators": ""
         }
       ],
       "metadata": {

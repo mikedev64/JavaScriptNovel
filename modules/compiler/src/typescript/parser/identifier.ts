@@ -1,32 +1,21 @@
 import { createParserToken } from "./index.js";
-import type { IParser, TParserType } from "../../../types/parser";
+import type { IParser, TParserModificator, TParserType } from "../../../types/parser";
 import type { IToken, TTokenType } from "../../../types/token";
 import JVNCompilerError from "../error/index.js";
 import { VALUE_SPECIAL_KEY_CLOSE, VALUE_SPECIAL_KEY_OPEN, VALUE_SPECIAL_PAREN_CLOSE, VALUE_SPECIAL_PAREN_OPEN } from "./constants/index.js";
 
 type TReturnType = [IParser<TParserType>, number];
 
-export function stringTypeDeclaration(token: IToken<TTokenType>, tokenz_list: IToken<TTokenType>[], counter: number): TReturnType {
-        const condition = token.type === "double_quote" ? "double_quote" : "single_quote";
-
+export function textTypeDeclaration(token: IToken<TTokenType>, tokens: IToken<TTokenType>[], counter: number): TReturnType {
         const node: IParser<"StringLiteral"> = {
                 type: "StringLiteral",
-                value: "",
-                params: null,
-                body: null,
+                value: token.value,
+                name: undefined,
+                params: undefined,
+                body: undefined,
+                modificators: undefined,
         };
 
-        counter++;
-        let internal_token = tokenz_list[counter];
-        const string_value: string[] = [];
-
-        while (internal_token.type !== condition) {
-                string_value.push(`${internal_token.value}`);
-                counter++;
-                internal_token = tokenz_list[counter];
-        }
-
-        node.value = string_value.join(" ");
         return [node, counter];
 }
 
@@ -36,12 +25,14 @@ export function stringTypeDeclaration(token: IToken<TTokenType>, tokenz_list: IT
  * @param counter current token index
  * @returns parsed variable declaration
  */
-export function variableTypeDeclaration(token: IToken<TTokenType>, counter: number): TReturnType {
+export function variableTypeDeclaration(token: IToken<TTokenType>, tokens: IToken<TTokenType>[], counter: number): TReturnType {
         const node: IParser<"VariableDeclaration" | "AudioDeclaration" | "VideoDeclaration" | "ImageDeclaration" | "CharacterDeclaration"> = {
                 type: "VariableDeclaration",
-                value: token.value,
-                params: null,
-                body: null,
+                value: "",
+                name: "",
+                params: undefined,
+                body: undefined,
+                modificators: token.value as TParserModificator,
         };
 
         if (token.value === "audio") node.type = "AudioDeclaration";
@@ -49,7 +40,13 @@ export function variableTypeDeclaration(token: IToken<TTokenType>, counter: numb
         if (token.value === "image") node.type = "ImageDeclaration";
         if (token.value === "character") node.type = "CharacterDeclaration";
 
-        return [node, counter++];
+        ++counter;
+
+        const [return_node, new_counter] = createParserToken<"IdentifierAssignment", false>(tokens, counter, false)!;
+        node.name = return_node.name!;
+        node.value = return_node.value;
+
+        return [node, new_counter];
 }
 
 /**
@@ -62,15 +59,22 @@ export function variableTypeDeclaration(token: IToken<TTokenType>, counter: numb
 export function functionTypeDeclaration(token: IToken<TTokenType>, tokens: IToken<TTokenType>[], counter: number): TReturnType {
         const node: IParser<"CallExpression"> = {
                 type: "CallExpression",
-                value: token.value,
+                value: "",
+                name: token.value as string,
                 params: [],
-                body: null,
+                body: undefined,
+                modificators: "",
         };
 
         let current_token = tokens[++counter];
 
         if (current_token.value !== VALUE_SPECIAL_PAREN_OPEN)
-                throw new JVNCompilerError(`Expected '(', but got '${current_token.value}'`, current_token.line, current_token.column);
+                throw new JVNCompilerError(
+                        `Expected '(', but got '${current_token.value}'`,
+                        current_token.type,
+                        current_token.line,
+                        current_token.column,
+                );
 
         current_token = tokens[++counter];
 
@@ -89,14 +93,21 @@ export function functionSceneTypeDeclaration(token: IToken<TTokenType>, tokens: 
         const node: IParser<"SceneDeclaration"> = {
                 type: "SceneDeclaration",
                 value: "",
+                name: "",
                 params: [],
                 body: [],
+                modificators: "",
         };
 
         let current_token = tokens[++counter];
 
         if (current_token.value !== VALUE_SPECIAL_PAREN_OPEN)
-                throw new JVNCompilerError(`Expected '(', but got '${current_token.value}'`, current_token.line, current_token.column);
+                throw new JVNCompilerError(
+                        `Expected '(', but got '${current_token.value}'`,
+                        current_token.type,
+                        current_token.line,
+                        current_token.column,
+                );
 
         current_token = tokens[++counter];
 
@@ -111,7 +122,12 @@ export function functionSceneTypeDeclaration(token: IToken<TTokenType>, tokens: 
         current_token = tokens[++counter];
 
         if (current_token.value !== VALUE_SPECIAL_KEY_OPEN)
-                throw new JVNCompilerError(`Expected '{', but got '${current_token.value}'`, current_token.line, current_token.column);
+                throw new JVNCompilerError(
+                        `Expected '{', but got '${current_token.value}'`,
+                        current_token.type,
+                        current_token.line,
+                        current_token.column,
+                );
 
         current_token = tokens[++counter];
 
@@ -121,6 +137,51 @@ export function functionSceneTypeDeclaration(token: IToken<TTokenType>, tokens: 
                 node.body.push(return_node);
                 counter = new_counter;
                 current_token = tokens[++counter];
+        }
+
+        return [node, counter];
+}
+
+export function functionModificatorTypeDeclaration(token: IToken<TTokenType>, tokens: IToken<TTokenType>[], counter: number): TReturnType {
+        const node: IParser<"CallExpression" | "SceneDeclaration"> = {
+                type: "CallExpression",
+                value: "",
+                name: "",
+                params: [],
+                body: undefined,
+                modificators: token.value as TParserModificator,
+        };
+
+        ++counter;
+
+        const [return_node, new_counter] = createParserToken<"CallExpression" | "SceneDeclaration", false>(tokens, counter, false)!;
+
+        return_node.type === "SceneDeclaration" ? (node.type = "SceneDeclaration") : null;
+
+        node.value = return_node.value;
+        node.name = return_node.name ?? "";
+        node.params = return_node.params!;
+        node.body = return_node.body;
+
+        return [node, new_counter];
+}
+
+export function LiteralTypeDeclaration(token: IToken<TTokenType>, tokens: IToken<TTokenType>[], counter: number): TReturnType {
+        const node: IParser<"NumberLiteral" | "FloatLiteral" | "BooleanLiteral"> = {
+                type: "NumberLiteral",
+                value: token.value,
+                name: undefined,
+                params: undefined,
+                body: undefined,
+                modificators: undefined,
+        };
+
+        if (token.type === "float") {
+                node.type = "FloatLiteral";
+                node.value = token.value;
+        } else if (token.type === "boolean") {
+                node.type = "BooleanLiteral";
+                node.value = token.value === "true";
         }
 
         return [node, counter];

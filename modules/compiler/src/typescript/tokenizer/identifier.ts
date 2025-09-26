@@ -1,9 +1,9 @@
-import { KEYWORDS, NUMBER_REGEX, SINGLE_QUOTE_REGEX, TEXT_REGEX_FULL } from "./constants/index.js";
+import { KEYWORDS, NUMBER_REGEX, TEXT_REGEX, TEXT_REGEX_FULL } from "./constants/index.js";
 import { IToken, returnToken } from "../../../types/token";
 
-export function textToken(line: number, column: number, currentLine: string): returnToken {
-        const token: IToken<"text" | "keyword"> = {
-                type: "text",
+export function specialToken(line: number, column: number, currentLine: string): returnToken {
+        const token: IToken<"name" | "keyword"> = {
+                type: "name",
                 value: "",
                 line: line + 1,
                 column: column + 1,
@@ -19,7 +19,7 @@ export function textToken(line: number, column: number, currentLine: string): re
 
                 const char = currentLine[iteration];
 
-                if (TEXT_REGEX_FULL.exec(char) !== null) {
+                if (TEXT_REGEX.exec(char) !== null) {
                         token.value += char;
                         iteration++;
                         continue;
@@ -54,27 +54,38 @@ export function numberToken(line: number, column: number, currentLine: string): 
                 }
         }
 
-        token.value = parseInt(valueStr);
+        if (valueStr.includes(".")) {
+                token.type = "float";
+                token.value = parseFloat(valueStr);
+        } else {
+                token.value = parseInt(valueStr);
+        }
 
         return [iteration - column, token];
 }
 
-export function quoteToken(line: number, column: number, currentLine: string): returnToken {
-        const token: IToken<"double_quote" | "single_quote"> = {
-                type: "double_quote",
+export function textToken(line: number, column: number, currentLine: string): returnToken {
+        const token: IToken<"string"> = {
+                type: "string",
                 value: "",
                 line: line + 1,
                 column: column + 1,
         };
 
-        const char = currentLine[column];
+        let iteration = column;
 
-        if (SINGLE_QUOTE_REGEX.exec(char) !== null) {
-                token.type = "single_quote";
+        while (iteration < currentLine.length) {
+                const nextChar = currentLine[++iteration];
+
+                if (TEXT_REGEX_FULL.exec(nextChar) !== null) {
+                        token.value += nextChar;
+                        continue;
+                } else {
+                        break;
+                }
         }
 
-        token.value = char;
-        return [column, token];
+        return [iteration - column, token];
 }
 
 export function parenToken(line: number, column: number, currentLine: string): returnToken {

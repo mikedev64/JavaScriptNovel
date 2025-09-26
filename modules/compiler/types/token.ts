@@ -10,34 +10,28 @@ export interface IToken<T extends TTokenType> {
         column: number;
 }
 
-type TTokenValueType<T extends TTokenType> = T extends "text"
+type TTokenValueType<T extends TTokenType> = T extends
+        | "string"
+        | "name"
+        | "double_quote"
+        | "single_quote"
+        | "parenthesis"
+        | "operator"
+        | "boolean"
+        | "keys"
+        | "bracket"
+        | "comma"
+        | "dot"
         ? string
-        : T extends "double_quote"
-          ? string
-          : T extends "single_quote"
-            ? string
-            : T extends "parenthesis"
-              ? string
-              : T extends "operator"
-                ? string
-                : T extends "number"
-                  ? number
-                  : T extends "boolean"
-                    ? boolean
-                    : T extends "keys"
-                      ? string
-                      : T extends "bracket"
-                        ? string
-                        : T extends "comma"
-                          ? string
-                          : T extends "dot"
-                            ? string
-                            : never;
+        : T extends "number"
+          ? number
+          : never;
 
 export type TTokenType =
         | "dot"
         | "comma"
-        | "text"
+        | "string"
+        | "name"
         | "number"
         | "float"
         | "boolean"

@@ -1,6 +1,6 @@
-export const TEXT_REGEX = /^[a-zA-ZáéíóúÁÉÍÓÚñÑü]+$/;
-export const TEXT_REGEX_FULL = /^[a-zA-ZáéíóúÁÉÍÓÚñÑü0-9]$/;
-export const NUMBER_REGEX = /^[0-9]$/;
+export const TEXT_REGEX = /^[a-zA-ZáéíóúÁÉÍÓÚñÑü]$/;
+export const TEXT_REGEX_FULL = /^[^"']+$/;
+export const NUMBER_REGEX = /^[0-9\.]$/;
 export const BOOLEAN_REGEX = /^(true|false)$/;
 
 export const DOUBLE_QUOTE_REGEX = /^"$/;
@@ -30,4 +30,8 @@ export const KEYWORDS = [
         "pause",
         "draw",
         "undraw",
+        "loop",
+        "fade",
+        "start",
+        "stop",
 ];

@@ -1,5 +1,5 @@
-scene("start") {
-    background("park.jpg")
+start scene("start hola") {
+    loop background("park.jpg")
     dialogue("Ana", "¡Hola, bienvenido!")
 }
 

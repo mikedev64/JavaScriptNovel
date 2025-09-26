@@ -1,5 +1,6 @@
 // Tokenizer
 import { ParserDetails, TokenDetails } from "../../types/compile.js";
+import { TParserType } from "../../types/parser.js";
 import { createParserToken } from "./parser/index.js";
 import createTokenList from "./tokenizer/index.js";
 // Types
@@ -36,7 +37,7 @@ export function parserData(token_list: TokenDetails[]): ParserDetails[] {
         const parsed_token: ParserDetails[] = [];
 
         for (const tokens of token_list) {
-                const keys = createParserToken<true>(tokens.tokens, 0)!;
+                const keys = createParserToken<TParserType, true>(tokens.tokens, 0)!;
                 parsed_token.push({
                         keys,
                         metadata: tokens.metadata,
